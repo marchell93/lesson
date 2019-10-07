@@ -50,6 +50,45 @@ print('Лампа -', lamps_quantity, 'шт, стоимость', lamps_cost, '�
 # Это задание на ручное вычисление - что бы потом понять как работают циклы и насколько с ними проще жить.
 
 # TODO здесь ваш код
+# Вычисления для столов
+table_code = goods['Стол']
+# Так как в данном списке хранятся 2 словаря => делаем 2 переменные table_item и так далее
+table_item_1 = store[table_code][0]
+table_item_2 = store[table_code][1]
+table_quantity_1 = table_item_1['quantity']
+table_quantity_2 = table_item_2['quantity']
+table_price_1 = table_item_1['price']
+table_price_2 = table_item_2['price']
+table_quantity_all = table_quantity_1 + table_quantity_2
+table_cost = (table_quantity_1 * table_price_1) + (table_quantity_2 * table_price_2)
+print(f'Стол - {table_quantity_all} шт., стоимость: {table_cost} руб.')
+
+# Вычисления для диванов
+sofa_code = goods['Диван']
+sofa_item_1 = store[sofa_code][0]
+sofa_item_2 = store[sofa_code][1]
+sofa_quantity_1 = sofa_item_1['quantity']
+sofa_quantity_2 = sofa_item_2['quantity']
+sofa_price_1 = sofa_item_1['price']
+sofa_price_2 = sofa_item_2['price']
+sofa_quantity_all = sofa_quantity_1 + sofa_quantity_2
+sofa_cost = (sofa_quantity_1 * sofa_price_1) + (sofa_quantity_2 * sofa_price_2)
+print(f'Диван - {sofa_quantity_all} шт., стоимость: {sofa_cost} руб.')
+
+# Вычисления для стульев
+chair_code = goods['Стул']
+chair_item_1 = store[chair_code][0]
+chair_item_2 = store[chair_code][1]
+chair_item_3 = store[chair_code][2]
+chair_quantity_1 = chair_item_1['quantity']
+chair_quantity_2 = chair_item_2['quantity']
+chair_quantity_3 = chair_item_3['quantity']
+chair_price_1 = chair_item_1['price']
+chair_price_2 = chair_item_2['price']
+chair_price_3 = chair_item_3['price']
+chair_quantity_all = chair_quantity_1 + chair_quantity_2 + chair_quantity_3
+chair_cost = (chair_quantity_1 * chair_price_1) + (chair_quantity_2 * chair_price_2) + (chair_quantity_3 * chair_price_3)
+print(f'Стул - {chair_quantity_all} шт., стоимость: {chair_cost} руб.')
 
 ##########################################################################################
 # ВНИМАНИЕ! После того как __ВСЯ__ домашняя работа сделана и запушена на сервер,         #
