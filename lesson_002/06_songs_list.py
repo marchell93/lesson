@@ -42,3 +42,5 @@ violator_songs_dict = {
 # TODO здесь ваш код
 full_time_song_dict = violator_songs_dict['Sweetest Perfection']+violator_songs_dict['Policy of Truth']+violator_songs_dict['Blue Dress']
 print(f'А другие три песни звучат {full_time_song_dict} минут')
+
+# TODO Удаляем тудушки
