@@ -30,4 +30,5 @@ print(garder_set - meadow_set)
 
 print(meadow_set - garder_set)
 
+# зачет!
 

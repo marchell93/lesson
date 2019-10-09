@@ -25,3 +25,5 @@ decoding_message = secret_message[0][3] + secret_message[1][9:13] + secret_messa
                    + secret_message[3][-20:-26:-1] + secret_message[4][-12:-17:-1]
 print(decoding_message)
 # вбаневеникдорожеденег, внесем пробелы и получим расшифрованное сообщение: в бане веник дороже денег
+
+# зачет!

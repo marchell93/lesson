@@ -45,4 +45,6 @@ print(d < radius)
 # False
 # False
 
+# зачет!
+
 
