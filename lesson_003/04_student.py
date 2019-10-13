@@ -10,5 +10,23 @@
 #   Студенту надо попросить ХХХ.ХХ рублей
 
 educational_grant, expenses = 10000, 12000
-
-# TODO здесь ваш код
+# Счётчик для цикла while
+count = 0
+# Переменная для сложения всех expenses рублей за 9 месяцев
+expenses_sum = 0
+while count < 9:
+    # Расчёт 3% ежемесечно от стоимости
+    x = (expenses * 3) / 100
+    # Расчёт expenses рублей в каждом месяце кроме первого
+    expenses += x
+    # Сложим расходы на проживание студента за 9 месяцев
+    expenses_sum += expenses
+    # Счётчик count + 1 для правильной работы цикла While
+    count += 1
+# Стипендия студента за 10 месяцев
+full_educational_grant = educational_grant * 10
+# Расходы на проживание студента за 10 месяцев
+full_expenses = 12000 + expenses_sum
+# Расчёт средств сколько студент должент попросить у родителей, чтобы прожить 10 месяцев
+parent_money = round(full_expenses - full_educational_grant, 2)
+print(f' Студенту надо попросить {parent_money} рублей')
