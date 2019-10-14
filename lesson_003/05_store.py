@@ -54,20 +54,11 @@ store = {
 #         подсчет стоимости товара
 #     вывод на консоль количества и стоимости товара на складе
 
-# цикл for по товарам с получением кода и названия товара
 for good, code in goods.items():
-    # инициализация переменных для подсчета количества и стоимости товара
     amount_of_goods = 0
     cost_of_goods = 0
-    # получение списка на складе по коду товара
     store_code = store[code]
-    # цикл for по списку на складе
     for store_list in store_code:
-        # подсчет количества товара
         amount_of_goods += store_list['quantity']
-        # подсчет стоимости товара
         cost_of_goods += store_list['price'] * store_list['quantity']
-    # вывод на консоль количества и стоимости товара на складе
     print(f'{good} - {amount_of_goods} шт., стоимость {cost_of_goods} руб')
-
-# TODO Аналогично с комментариями
