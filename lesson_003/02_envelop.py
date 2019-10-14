@@ -20,14 +20,10 @@ paper_x, paper_y = 8, 9
 # paper_x, paper_y = 9, 11
 # (просто раскоментировать нужную строку и проверить свой код)
 
-# TODO Код рабочий, но лучше будет сделать без вложенности через оператор and, так код легче воспринимать.
-#  И лист бумаги можно еще повернуть на 90 градусов (альбомная и книжная ориентация). Здесь опять же можно без
-#  вложенности через оператор elif
-if envelop_x > paper_x:
-    if envelop_y > paper_y:
-        print('Да, бумага поместится в конверт')
-    else:
-        print('Нет, бумага не поместится в конверт')
+if envelop_x > paper_x and envelop_y > paper_y:
+    print('Да, бумага поместится в конверт')
+elif envelop_x > paper_y and envelop_y > paper_x:
+    print('Да, бумага поместится в конверт')
 else:
     print('Нет, бумага не поместится в конверт')
 
@@ -60,9 +56,18 @@ brick_x, brick_y, brick_z = 11, 10, 2
 
 # Данный код написан при условии, что brick_х - длина кирпича, brick_у - ширина кирпича, brick_z - толщина кирпича
 # И что грани кирпича параллельны сторонам отверстия
-# TODO А тут кирпич можно шестью способами в отверстие направлять.
-#  http://joxi.ru/MAjbDEXc4G85RA
-if hole_x > brick_x and hole_y > brick_z:
+
+if hole_x > brick_x and hole_y > brick_y:
+    print('Кирпич пройдет через отверстие')
+elif hole_x > brick_y and hole_y > brick_x:
+    print('Кирпич пройдет через отверстие')
+elif hole_x > brick_x and hole_y > brick_z:
+    print('Кирпич пройдет через отверстие')
+elif hole_x > brick_z and hole_y > brick_x:
+    print('Кирпич пройдет через отверстие')
+elif hole_x > brick_z and hole_y > brick_y:
+    print('Кирпич пройдет через отверстие')
+elif hole_x > brick_y and hole_y > brick_z:
     print('Кирпич пройдет через отверстие')
 else:
     print('Кирпич не пройдет через отверстие')
