@@ -39,3 +39,5 @@ for _ in range(10):
     color = sd.random_color()
     smile(x, y, color)
 sd.pause()
+
+# зачет!
