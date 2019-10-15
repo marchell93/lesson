@@ -71,3 +71,5 @@ elif hole_x > brick_y and hole_y > brick_z:
     print('Кирпич пройдет через отверстие')
 else:
     print('Кирпич не пройдет через отверстие')
+
+# зачет!

@@ -47,3 +47,5 @@ for _ in range(100):
     bubble(point, step, color)
 
 sd.pause()
+
+# зачет!

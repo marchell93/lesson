@@ -10,6 +10,7 @@
 #   Студенту надо попросить ХХХ.ХХ рублей
 
 educational_grant, expenses = 10000, 12000
+full_expenses = expenses  # Можно это сразу здесь сделать
 # Счётчик для цикла while
 count = 0
 expenses_sum = 0
@@ -19,9 +20,9 @@ while count < 9:
     expenses += x
     expenses_sum += expenses
     count += 1
-# Возвращаем значение expenses = 12000
-expenses = 12000
 full_educational_grant = educational_grant * 10
-full_expenses = expenses + expenses_sum
+full_expenses += expenses_sum
 parent_money = round(full_expenses - full_educational_grant, 2)
 print(f' Студенту надо попросить {parent_money} рублей')
+
+# зачет!

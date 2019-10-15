@@ -62,3 +62,5 @@ for good, code in goods.items():
         amount_of_goods += store_list['quantity']
         cost_of_goods += store_list['price'] * store_list['quantity']
     print(f'{good} - {amount_of_goods} шт., стоимость {cost_of_goods} руб')
+
+# зачет!
