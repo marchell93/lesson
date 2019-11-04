@@ -61,9 +61,9 @@ def draw_branches_modification(start_point, angle, length):
     v1 = sd.get_vector(start_point=start_point, angle=angle, length=length)
     v1.draw(width=1)
     delta_angle = sd.random_number(18, 42)
-    delta_lenght = random.uniform(.5, 1)
+    delta_length = random.uniform(.5, 1)
     next_point = v1.end_point
-    next_length = length * delta_lenght
+    next_length = length * delta_length
     next_angle_left = angle - delta_angle
     draw_branches_modification(start_point=next_point, angle=next_angle_left, length=next_length)
     next_angle_right = angle + delta_angle
