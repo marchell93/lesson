@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import simple_draw as sd
-
+import random
 # 1) Написать функцию draw_branches, которая должна рисовать две ветви дерева из начальной точки
 # Функция должна принимать параметры:
 # - точка начала рисования,
@@ -26,12 +26,54 @@ import simple_draw as sd
 
 # можно поиграть -шрифтами- цветами и углами отклонения
 
-# TODO здесь ваш код
+sd.resolution = (1200, 600)
+
+
+def draw_branches(start_point, angle, length, delta):
+    if length < 5:
+        return
+    v1 = sd.get_vector(start_point=start_point, angle=angle, length=length)
+    v1.draw(width=1)
+    next_point = v1.end_point
+    next_length = length * .75
+    next_angle_left = angle - delta
+    next_angle_right = angle + delta
+    draw_branches(start_point=next_point, angle=next_angle_left, length=next_length, delta=delta)
+    draw_branches(start_point=next_point, angle=next_angle_right, length=next_length, delta=delta)
+
+
+root_point = sd.get_point(300, 30)
+root_angle = 90
+root_length = 100
+delta = 30
+draw_branches(start_point=root_point, angle=root_angle, length=root_length, delta=delta)
+# -------------------------------------------------------------------------------------------------------------------
 
 # 4) Усложненное задание (делать по желанию)
 # - сделать рандомное отклонение угла ветвей в пределах 40% от 30-ти градусов
 # - сделать рандомное отклонение длины ветвей в пределах 20% от коэффициента 0.75
 # Возможный результат решения см lesson_004/results/exercise_04_fractal_02.jpg
+
+
+def draw_branches_modification(start_point, angle, length):
+    if length < 4:
+        return
+    v1 = sd.get_vector(start_point=start_point, angle=angle, length=length)
+    v1.draw(width=1)
+    delta_angle = sd.random_number(18, 42)
+    delta_lenght = random.uniform(.5, 1)
+    next_point = v1.end_point
+    next_length = length * delta_lenght
+    next_angle_left = angle - delta_angle
+    draw_branches_modification(start_point=next_point, angle=next_angle_left, length=next_length)
+    next_angle_right = angle + delta_angle
+    draw_branches_modification(start_point=next_point, angle=next_angle_right, length=next_length)
+
+
+root_point = sd.get_point(300, 30)
+root_angle = 90
+root_length = 100
+draw_branches_modification(start_point=root_point, angle=root_angle, length=root_length)
 
 # Пригодятся функции
 # sd.random_number()
