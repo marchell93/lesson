@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import simple_draw as sd
+from random import choice
 
 
 # На основе кода из практической части реализовать снегопад:
@@ -17,12 +18,28 @@ N = 20
 # sd.random_number()
 # sd.user_want_exit()
 
-# TODO здесь ваш код
+list_x = []
+# list_y = [650] * 20
+list_length = []
+
+for _ in range(N):
+    list_x.append(sd.random_number(0, 600))
+    list_length.append(sd.random_number(10, 100))
+y = 650
 while True:
     sd.clear_screen()
-    pass
-    pass
-    pass
+    sd.start_drawing()
+    for i in range(N):
+        point0 = sd.get_point(list_x[i], y)
+        sd.snowflake(center=point0, length=list_length[i], color=sd.COLOR_WHITE)
+        y -= 5
+        if y < 0:
+            break
+        x = list_x[i] + 10
+        point1 = sd.get_point(x, y)
+        sd.snowflake(center=point0, length=list_length[i], color=sd.background_color)
+        sd.snowflake(center=point1, length=list_length[i], color=sd.COLOR_WHITE)
+    sd.finish_drawing()
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
