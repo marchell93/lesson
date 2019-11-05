@@ -65,24 +65,19 @@ def pentagon(point, angle, length, color):
     v5.draw(color=color)
 
 
-# TODO Сделаем сразу словарь такого вида:
-#  global_colors = {
-#      0: {'title': 'red', 'value': sd.COLOR_RED},
-#      1: {'title': 'orange', 'value': sd.COLOR_ORANGE},
-#      ...
-#  }
 global_color = {
-    0: sd.COLOR_RED,
-    1: sd.COLOR_ORANGE,
-    2: sd.COLOR_YELLOW,
-    3: sd.COLOR_GREEN,
-    4: sd.COLOR_CYAN,
-    5: sd.COLOR_BLUE,
-    6: sd.COLOR_PURPLE
+    0: {'title': 'red', 'value': sd.COLOR_RED},
+    1: {'title': 'orange', 'value': sd.COLOR_ORANGE},
+    2: {'title': 'yellow', 'value': sd.COLOR_YELLOW},
+    3: {'title': 'green', 'value': sd.COLOR_GREEN},
+    4: {'title': 'cyan', 'value': sd.COLOR_CYAN},
+    5: {'title': 'blue', 'value': sd.COLOR_BLUE},
+    6: {'title': 'purple', 'value': sd.COLOR_PURPLE}
     }
 
-# TODO Тут красиво сделать распечатку номер - название цвета в цикле через colors.items()
-print(f'Возможные цвета:\n\t0 : red\n\t1 : orange\n\t2 : yellow\n\t3 : green\n\t4 : cyan\n\t5 : blue\n\t6 : purple')
+print('Возможные цвета:')
+for number, color in global_color.items():
+    print(f"{number} : {color['title']}")
 angle = 10
 length = 100
 point_triangle = sd.get_point(150, 150)
@@ -91,18 +86,13 @@ point_hexagon = sd.get_point(600, 350)
 point_pentagon = sd.get_point(150, 350)
 while True:
     user_number = int(input('Введите желаемый цвет: '))
-    # TODO Здесь тогда можно проверить на вхождение в этот словарь
-    if 0 <= user_number <= 6:
-        # TODO Тут просится цвет в переменную вынести, чтобы каждый раз в словарь не лезть
-        triangle(point_triangle, angle, length, global_color[user_number])
-        square(point_square, angle, length, global_color[user_number])
-        hexagon(point_hexagon, angle, length, global_color[user_number])
-        pentagon(point_pentagon, angle, length, global_color[user_number])
+    if user_number in global_color:
+        color_figure = global_color[user_number]['value']
+        triangle(point_triangle, angle, length, color_figure)
+        square(point_square, angle, length, color_figure)
+        hexagon(point_hexagon, angle, length, color_figure)
+        pentagon(point_pentagon, angle, length, color_figure)
         break
     else:
         print('Вы ввели некоректный номер!')
 sd.pause()
-
-
-# TODO Таким образом наш код станет более поддерживаемым - если понадобится добавить еще один цвет, мы только
-#  внесем еще одну срочку в словарь global_colors, весь остальной код останется без изменений.
