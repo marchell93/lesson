@@ -68,17 +68,17 @@ def hexagon(point, angle, length):
 def pentagon(point, angle, length):
     v1 = sd.get_vector(start_point=point, angle=angle, length=length)
     v1.draw()
-    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 70, length=length)
+    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 75, length=length)
     v2.draw()
-    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 150, length=length)
+    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 140, length=length)
     v3.draw()
-    v4 = sd.get_vector(start_point=v3.end_point, angle=angle + 210, length=length)
+    v4 = sd.get_vector(start_point=v3.end_point, angle=angle + 225, length=length)
     v4.draw()
-    v5 = sd.get_vector(start_point=v4.end_point, angle=angle + 293, length=length)
+    v5 = sd.get_vector(start_point=v4.end_point, angle=angle + 285, length=length)
     v5.draw()
 
 
-angle = 0
+angle = 10
 length = 100
 point_triangle = sd.get_point(150, 150)
 triangle(point_triangle, angle, length)
@@ -89,7 +89,57 @@ hexagon(point_hexagon, angle, length)
 point_pentagon = sd.get_point(150, 350)
 pentagon(point_pentagon, angle, length)
 
-# TODO Можно делать вторую часть
+# Вторая часть задания ---------------------------------------------------------------------------------------------
+
+
+def full_shapes(point, angle, length, iteration, angle_delta):
+    # Заносим точку начала рисования фугуры в переменную point_0, чтобы в дальнейшем использовать в sd.line()
+    point_0 = point
+    for i in range(iteration):
+        if i == iteration - 1:
+            sd.line(start_point=point, end_point=point_0)
+        else:
+            v = sd.get_vector(point, angle, length)
+            v.draw()
+            point = v.end_point
+            angle = angle + angle_delta
+
+
+def triangle_modification(point, angle, length):
+    iteration = 3
+    angle_delta = 120
+    full_shapes(point, angle, length, iteration, angle_delta)
+
+
+def square_modification(point, angle, length):
+    iteration = 4
+    angle_delta = 90
+    full_shapes(point, angle, length, iteration, angle_delta)
+
+
+def hexagon_modification(point, angle, length):
+    iteration = 6
+    angle_delta = 60
+    full_shapes(point, angle, length, iteration, angle_delta)
+
+
+def pentagon_modification(point, angle, length):
+    iteration = 5
+    angle_delta = 73
+    full_shapes(point, angle, length, iteration, angle_delta)
+
+
+angle = 10
+length = 100
+point_triangle = sd.get_point(150, 150)
+triangle_modification(point_triangle, angle, length)
+point_square = sd.get_point(600, 150)
+square_modification(point_square, angle, length)
+point_hexagon = sd.get_point(600, 350)
+hexagon_modification(point_hexagon, angle, length)
+point_pentagon = sd.get_point(150, 350)
+pentagon_modification(point_pentagon, angle, length)
+
 
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
