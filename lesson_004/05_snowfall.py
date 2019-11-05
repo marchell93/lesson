@@ -19,24 +19,29 @@ N = 20
 
 list_x = []
 # list_y = [650] * 20
+# TODO Надо для координат y тоже сделать список
 list_length = []
 
 for _ in range(N):
     list_x.append(sd.random_number(0, 600))
     list_length.append(sd.random_number(10, 100))
+    # TODO И тут его тоже заполнить рандомными значениями
 y = 650
 while True:
-    sd.clear_screen()
+    # sd.clear_screen()
     sd.start_drawing()
     for i in range(N):
         point0 = sd.get_point(list_x[i], y)
+        # TODO Здесь рисуем цветом фона
         sd.snowflake(center=point0, length=list_length[i], color=sd.COLOR_WHITE)
+        # TODO Тут будем уменьшать\проверять y[i]
         y -= 5
         if y < 0:
             break
+        # TODO Надо менять именно значение в списке, то есть list_x[i] += 10
         x = list_x[i] + 10
         point1 = sd.get_point(x, y)
-        sd.snowflake(center=point0, length=list_length[i], color=sd.background_color)
+        sd.snowflake(center=point0, length=list_length[i], color=sd.background_color)  # TODO это можно удалить
         sd.snowflake(center=point1, length=list_length[i], color=sd.COLOR_WHITE)
     sd.finish_drawing()
     sd.sleep(0.1)

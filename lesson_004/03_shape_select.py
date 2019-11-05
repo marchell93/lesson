@@ -58,6 +58,12 @@ def pentagon(point, angle, length, color):
     v5.draw(color=color)
 
 
+# TODO Аналогично, сделаем словарь, только теперь для фигур:
+#  shapes = {
+#      0: {'title': 'треугольник', 'function': triangle},
+#      1: {'title': 'квадрат', 'function': square},
+#      ...
+#  }
 print(f'Возможные фигуры:\n\t0 : треугольник\n\t1 : квадрат\n\t2 : пятиугольник\n\t3 : шестиугольник\n\t')
 angle = 10
 length = 100
@@ -65,6 +71,8 @@ color = sd.COLOR_DARK_ORANGE
 start_point = sd.get_point(250, 250)
 while True:
     user_number = int(input('Введите желаемую фигуру: '))
+    # TODO Тогда здесь можно проверить на вхождение в словарь
+    #    и сделать вызов этой функции из словаря, цепочки условий не понадобится
     if user_number == 0:
         triangle(start_point, angle, length, color)
         break
