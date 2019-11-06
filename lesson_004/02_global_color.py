@@ -17,6 +17,7 @@ import simple_draw as sd
 sd.resolution = (1200, 600)
 
 
+# TODO Сюда уже переносим тогда новые функции с общей частью
 def triangle(point, angle, length, color):
     v1 = sd.get_vector(start_point=point, angle=angle, length=length)
     v1.draw(color=color)
@@ -96,3 +97,5 @@ while True:
     else:
         print('Вы ввели некоректный номер!')
 sd.pause()
+
+# TODO В остальном здесь все отлично!

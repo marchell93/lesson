@@ -17,6 +17,13 @@ N = 20
 # sd.random_number()
 # sd.user_want_exit()
 
+# TODO Немного с неймнгом поработаем.
+#  Использовать слова list, tuple, dict, str и т.п.
+#  в названиях переменных - плохой стиль, они слишком общие.
+#  В наших программах все или данные или значения или списки/словари. И программисту, читающему код,
+#  такие названия ничего не говорят. Название переменной должно отражать суть того обьекта,
+#  на который она ссылается.
+#  Это у нас координаты x, y и длины снежинок
 list_x = []
 list_y = []
 list_length = []
@@ -24,6 +31,7 @@ list_length = []
 for _ in range(N):
     list_x.append(sd.random_number(0, 600))
     list_length.append(sd.random_number(10, 100))
+    # TODO Можно по y сделать побольше разброс, чтобы они кучей не падали
     list_y.append(sd.random_number(600, 650))
 while True:
     sd.start_drawing()
@@ -32,6 +40,8 @@ while True:
         sd.snowflake(center=point_0, length=list_length[i], color=sd.background_color)
         list_y[i] -= 5
         if list_y[i] < 0:
+            # TODO Тут надо не прерывать цикл, а задвать новую координату y, чтобы снегопад у нас бесконечный был.
+            #  Координату x тоже можно новую задать, а то со временем они все вправо уедут)
             break
         list_x[i] += 1
         point_1 = sd.get_point(list_x[i], list_y[i])

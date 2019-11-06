@@ -9,7 +9,7 @@ import simple_draw as sd
 # Код функций из упр lesson_004/02_global_color.py скопировать сюда
 # Результат решения см lesson_004/results/exercise_03_shape_select.jpg
 
-
+# TODO Аналогично, переносим сюда новые функции
 def triangle(point, angle, length, color):
     v1 = sd.get_vector(start_point=point, angle=angle, length=length)
     v1.draw(color=color)
@@ -74,6 +74,9 @@ start_point = sd.get_point(250, 250)
 while True:
     user_number = int(input('Введите желаемую фигуру: '))
     if user_number in shapes:
+        # TODO Чтобы код легче воспринимался, лучше разбить это на две строки -
+        #  сохранить в переменную фукнцию из словаря
+        #  сделать вызов этой переменной
         shapes[user_number]['function'](start_point, angle, length, color)
         break
     else:

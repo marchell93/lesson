@@ -78,25 +78,29 @@ def pentagon(point, angle, length):
     v5.draw()
 
 
-angle = 10
-length = 100
-point_triangle = sd.get_point(150, 150)
-triangle(point_triangle, angle, length)
-point_square = sd.get_point(600, 150)
-square(point_square, angle, length)
-point_hexagon = sd.get_point(600, 350)
-hexagon(point_hexagon, angle, length)
-point_pentagon = sd.get_point(150, 350)
-pentagon(point_pentagon, angle, length)
+# angle = 10
+# length = 100
+# point_triangle = sd.get_point(150, 150)
+# triangle(point_triangle, angle, length)
+# point_square = sd.get_point(600, 150)
+# square(point_square, angle, length)
+# point_hexagon = sd.get_point(600, 350)
+# hexagon(point_hexagon, angle, length)
+# point_pentagon = sd.get_point(150, 350)
+# pentagon(point_pentagon, angle, length)
 
 # Вторая часть задания ---------------------------------------------------------------------------------------------
 
 
 def full_shapes(point, angle, length, iteration, angle_delta):
     # Заносим точку начала рисования фугуры в переменную point_0, чтобы в дальнейшем использовать в sd.line()
+    # TODO angle_delta можно не передавать, а рассчитывать в функции - это 360/количество сторон
     point_0 = point
+    # TODO Будет немнго проще завести цикл по range(iteration - 1)
     for i in range(iteration):
         if i == iteration - 1:
+            # TODO А последнюю сторону уже просто нарисовать после цикла линией.
+            #  Так избавимся от условий - код будет легче воспринимать
             sd.line(start_point=point, end_point=point_0)
         else:
             v = sd.get_vector(point, angle, length)
