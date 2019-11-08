@@ -92,11 +92,11 @@ def pentagon(point, angle, length):
 # Вторая часть задания ---------------------------------------------------------------------------------------------
 
 
-def full_shapes(point, angle, length, iteration):
+def full_shapes(point, angle, length, number_of_sides):
     # Заносим точку начала рисования фугуры в переменную point_0, чтобы в дальнейшем использовать в sd.line()
     point_0 = point
-    angle_delta = 360 / iteration
-    for i in range(iteration - 1):
+    angle_delta = 360 / number_of_sides
+    for i in range(number_of_sides - 1):
         v = sd.get_vector(point, angle, length)
         v.draw()
         point = v.end_point
@@ -105,23 +105,23 @@ def full_shapes(point, angle, length, iteration):
 
 
 def triangle_modification(point, angle, length):
-    iteration = 3
-    full_shapes(point, angle, length, iteration)
+    number_of_sides = 3
+    full_shapes(point, angle, length, number_of_sides)
 
 
 def square_modification(point, angle, length):
-    iteration = 4
-    full_shapes(point, angle, length, iteration)
+    number_of_sides = 4
+    full_shapes(point, angle, length, number_of_sides)
 
 
 def hexagon_modification(point, angle, length):
-    iteration = 6
-    full_shapes(point, angle, length, iteration)
+    number_of_sides = 6
+    full_shapes(point, angle, length, number_of_sides)
 
 
 def pentagon_modification(point, angle, length):
-    iteration = 5
-    full_shapes(point, angle, length, iteration)
+    number_of_sides = 5
+    full_shapes(point, angle, length, number_of_sides)
 
 
 angle = 10
