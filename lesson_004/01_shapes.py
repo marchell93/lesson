@@ -92,45 +92,36 @@ def pentagon(point, angle, length):
 # Вторая часть задания ---------------------------------------------------------------------------------------------
 
 
-def full_shapes(point, angle, length, iteration, angle_delta):
+def full_shapes(point, angle, length, iteration):
     # Заносим точку начала рисования фугуры в переменную point_0, чтобы в дальнейшем использовать в sd.line()
-    # TODO angle_delta можно не передавать, а рассчитывать в функции - это 360/количество сторон
     point_0 = point
-    # TODO Будет немнго проще завести цикл по range(iteration - 1)
-    for i in range(iteration):
-        if i == iteration - 1:
-            # TODO А последнюю сторону уже просто нарисовать после цикла линией.
-            #  Так избавимся от условий - код будет легче воспринимать
-            sd.line(start_point=point, end_point=point_0)
-        else:
-            v = sd.get_vector(point, angle, length)
-            v.draw()
-            point = v.end_point
-            angle = angle + angle_delta
+    angle_delta = 360 / iteration
+    for i in range(iteration - 1):
+        v = sd.get_vector(point, angle, length)
+        v.draw()
+        point = v.end_point
+        angle = angle + angle_delta
+    sd.line(start_point=point, end_point=point_0)
 
 
 def triangle_modification(point, angle, length):
     iteration = 3
-    angle_delta = 120
-    full_shapes(point, angle, length, iteration, angle_delta)
+    full_shapes(point, angle, length, iteration)
 
 
 def square_modification(point, angle, length):
     iteration = 4
-    angle_delta = 90
-    full_shapes(point, angle, length, iteration, angle_delta)
+    full_shapes(point, angle, length, iteration)
 
 
 def hexagon_modification(point, angle, length):
     iteration = 6
-    angle_delta = 60
-    full_shapes(point, angle, length, iteration, angle_delta)
+    full_shapes(point, angle, length, iteration)
 
 
 def pentagon_modification(point, angle, length):
     iteration = 5
-    angle_delta = 73
-    full_shapes(point, angle, length, iteration, angle_delta)
+    full_shapes(point, angle, length, iteration)
 
 
 angle = 10
