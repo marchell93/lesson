@@ -9,61 +9,46 @@ import simple_draw as sd
 # Код функций из упр lesson_004/02_global_color.py скопировать сюда
 # Результат решения см lesson_004/results/exercise_03_shape_select.jpg
 
-# TODO Аналогично, переносим сюда новые функции
-def triangle(point, angle, length, color):
-    v1 = sd.get_vector(start_point=point, angle=angle, length=length)
-    v1.draw(color=color)
-    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 120, length=length)
-    v2.draw(color=color)
-    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 240, length=length)
-    v3.draw(color=color)
+
+def full_shapes(point, angle, length, number_of_sides, color):
+    # Заносим точку начала рисования фугуры в переменную point_0, чтобы в дальнейшем использовать в sd.line()
+    point_0 = point
+    angle_delta = 360 / number_of_sides
+    for i in range(number_of_sides - 1):
+        v = sd.get_vector(point, angle, length)
+        v.draw(color=color)
+        point = v.end_point
+        angle = angle + angle_delta
+    sd.line(start_point=point, end_point=point_0, color=color)
 
 
-def square(point, angle, length, color):
-    v1 = sd.get_vector(start_point=point, angle=angle, length=length)
-    v1.draw(color=color)
-    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 90, length=length)
-    v2.draw(color=color)
-    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 180, length=length)
-    v3.draw(color=color)
-    v4 = sd.get_vector(start_point=v3.end_point, angle=angle + 270, length=length)
-    v4.draw(color=color)
+def triangle_modification(point, angle, length, color):
+    number_of_sides = 3
+    full_shapes(point, angle, length, number_of_sides, color)
 
 
-def hexagon(point, angle, length, color):
-    v1 = sd.get_vector(start_point=point, angle=angle, length=length)
-    v1.draw(color=color)
-    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 60, length=length)
-    v2.draw(color=color)
-    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 120, length=length)
-    v3.draw(color=color)
-    v4 = sd.get_vector(start_point=v3.end_point, angle=angle + 180, length=length)
-    v4.draw(color=color)
-    v5 = sd.get_vector(start_point=v4.end_point, angle=angle + 240, length=length)
-    v5.draw(color=color)
-    v6 = sd.get_vector(start_point=v5.end_point, angle=angle + 300, length=length)
-    v6.draw(color=color)
+def square_modification(point, angle, length, color):
+    number_of_sides = 4
+    full_shapes(point, angle, length, number_of_sides, color)
 
 
-def pentagon(point, angle, length, color):
-    v1 = sd.get_vector(start_point=point, angle=angle, length=length)
-    v1.draw(color=color)
-    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 70, length=length)
-    v2.draw(color=color)
-    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 150, length=length)
-    v3.draw(color=color)
-    v4 = sd.get_vector(start_point=v3.end_point, angle=angle + 210, length=length)
-    v4.draw(color=color)
-    v5 = sd.get_vector(start_point=v4.end_point, angle=angle + 293, length=length)
-    v5.draw(color=color)
+def hexagon_modification(point, angle, length, color):
+    number_of_sides = 6
+    full_shapes(point, angle, length, number_of_sides, color)
+
+
+def pentagon_modification(point, angle, length, color):
+    number_of_sides = 5
+    full_shapes(point, angle, length, number_of_sides, color)
 
 
 shapes = {
-    0: {'title': 'треугольник', 'function': triangle},
-    1: {'title': 'квадрат', 'function': square},
-    2: {'title': 'пятиугольник', 'function': pentagon},
-    3: {'title': 'шестиугольник', 'function': hexagon}
+    0: {'title': 'треугольник', 'function': triangle_modification},
+    1: {'title': 'квадрат', 'function': square_modification},
+    2: {'title': 'пятиугольник', 'function': pentagon_modification},
+    3: {'title': 'шестиугольник', 'function': hexagon_modification}
 }
+
 print('Возможные фигуры:')
 for number, shape in shapes.items():
     print(f"{number} : {shape['title']}")
@@ -74,10 +59,8 @@ start_point = sd.get_point(250, 250)
 while True:
     user_number = int(input('Введите желаемую фигуру: '))
     if user_number in shapes:
-        # TODO Чтобы код легче воспринимался, лучше разбить это на две строки -
-        #  сохранить в переменную фукнцию из словаря
-        #  сделать вызов этой переменной
-        shapes[user_number]['function'](start_point, angle, length, color)
+        function_name = shapes[user_number]['function']
+        function_name(start_point, angle, length, color)
         break
     else:
         print('Вы ввели некоректный номер!')

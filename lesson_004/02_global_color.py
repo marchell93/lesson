@@ -17,53 +17,36 @@ import simple_draw as sd
 sd.resolution = (1200, 600)
 
 
-# TODO Сюда уже переносим тогда новые функции с общей частью
-def triangle(point, angle, length, color):
-    v1 = sd.get_vector(start_point=point, angle=angle, length=length)
-    v1.draw(color=color)
-    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 120, length=length)
-    v2.draw(color=color)
-    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 240, length=length)
-    v3.draw(color=color)
+def full_shapes(point, angle, length, number_of_sides, color):
+    # Заносим точку начала рисования фугуры в переменную point_0, чтобы в дальнейшем использовать в sd.line()
+    point_0 = point
+    angle_delta = 360 / number_of_sides
+    for i in range(number_of_sides - 1):
+        v = sd.get_vector(point, angle, length)
+        v.draw(color=color)
+        point = v.end_point
+        angle = angle + angle_delta
+    sd.line(start_point=point, end_point=point_0, color=color)
 
 
-def square(point, angle, length, color):
-    v1 = sd.get_vector(start_point=point, angle=angle, length=length)
-    v1.draw(color=color)
-    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 90, length=length)
-    v2.draw(color=color)
-    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 180, length=length)
-    v3.draw(color=color)
-    v4 = sd.get_vector(start_point=v3.end_point, angle=angle + 270, length=length)
-    v4.draw(color=color)
+def triangle_modification(point, angle, length, color):
+    number_of_sides = 3
+    full_shapes(point, angle, length, number_of_sides, color)
 
 
-def hexagon(point, angle, length, color):
-    v1 = sd.get_vector(start_point=point, angle=angle, length=length)
-    v1.draw(color=color)
-    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 60, length=length)
-    v2.draw(color=color)
-    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 120, length=length)
-    v3.draw(color=color)
-    v4 = sd.get_vector(start_point=v3.end_point, angle=angle + 180, length=length)
-    v4.draw(color=color)
-    v5 = sd.get_vector(start_point=v4.end_point, angle=angle + 240, length=length)
-    v5.draw(color=color)
-    v6 = sd.get_vector(start_point=v5.end_point, angle=angle + 300, length=length)
-    v6.draw(color=color)
+def square_modification(point, angle, length, color):
+    number_of_sides = 4
+    full_shapes(point, angle, length, number_of_sides, color)
 
 
-def pentagon(point, angle, length, color):
-    v1 = sd.get_vector(start_point=point, angle=angle, length=length)
-    v1.draw(color=color)
-    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 70, length=length)
-    v2.draw(color=color)
-    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 150, length=length)
-    v3.draw(color=color)
-    v4 = sd.get_vector(start_point=v3.end_point, angle=angle + 210, length=length)
-    v4.draw(color=color)
-    v5 = sd.get_vector(start_point=v4.end_point, angle=angle + 293, length=length)
-    v5.draw(color=color)
+def hexagon_modification(point, angle, length, color):
+    number_of_sides = 6
+    full_shapes(point, angle, length, number_of_sides, color)
+
+
+def pentagon_modification(point, angle, length, color):
+    number_of_sides = 5
+    full_shapes(point, angle, length, number_of_sides, color)
 
 
 global_color = {
@@ -89,13 +72,11 @@ while True:
     user_number = int(input('Введите желаемый цвет: '))
     if user_number in global_color:
         color_figure = global_color[user_number]['value']
-        triangle(point_triangle, angle, length, color_figure)
-        square(point_square, angle, length, color_figure)
-        hexagon(point_hexagon, angle, length, color_figure)
-        pentagon(point_pentagon, angle, length, color_figure)
+        triangle_modification(point_triangle, angle, length, color_figure)
+        square_modification(point_square, angle, length, color_figure)
+        hexagon_modification(point_hexagon, angle, length, color_figure)
+        pentagon_modification(point_pentagon, angle, length, color_figure)
         break
     else:
         print('Вы ввели некоректный номер!')
 sd.pause()
-
-# TODO В остальном здесь все отлично!
