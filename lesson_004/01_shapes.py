@@ -92,48 +92,49 @@ def pentagon(point, angle, length):
 # Вторая часть задания ---------------------------------------------------------------------------------------------
 
 
-def full_shapes(point, angle, length, number_of_sides):
+def full_shapes(point, angle, length, number_of_sides, color):
     # Заносим точку начала рисования фугуры в переменную point_0, чтобы в дальнейшем использовать в sd.line()
     point_0 = point
     angle_delta = 360 / number_of_sides
     for i in range(number_of_sides - 1):
         v = sd.get_vector(point, angle, length)
-        v.draw()
+        v.draw(color=color)
         point = v.end_point
         angle = angle + angle_delta
-    sd.line(start_point=point, end_point=point_0)
+    sd.line(start_point=point, end_point=point_0, color=color)
 
 
-def triangle_modification(point, angle, length):
+def triangle_modification(point, angle, length, color):
     number_of_sides = 3
-    full_shapes(point, angle, length, number_of_sides)
+    full_shapes(point, angle, length, number_of_sides, color)
 
 
-def square_modification(point, angle, length):
+def square_modification(point, angle, length, color):
     number_of_sides = 4
-    full_shapes(point, angle, length, number_of_sides)
+    full_shapes(point, angle, length, number_of_sides, color)
 
 
-def hexagon_modification(point, angle, length):
+def hexagon_modification(point, angle, length, color):
     number_of_sides = 6
-    full_shapes(point, angle, length, number_of_sides)
+    full_shapes(point, angle, length, number_of_sides, color)
 
 
-def pentagon_modification(point, angle, length):
+def pentagon_modification(point, angle, length, color):
     number_of_sides = 5
-    full_shapes(point, angle, length, number_of_sides)
+    full_shapes(point, angle, length, number_of_sides, color)
 
 
 angle = 10
 length = 100
+color = sd.COLOR_CYAN
 point_triangle = sd.get_point(150, 150)
-triangle_modification(point_triangle, angle, length)
+triangle_modification(point_triangle, angle, length, color)
 point_square = sd.get_point(600, 150)
-square_modification(point_square, angle, length)
+square_modification(point_square, angle, length, color)
 point_hexagon = sd.get_point(600, 350)
-hexagon_modification(point_hexagon, angle, length)
+hexagon_modification(point_hexagon, angle, length, color)
 point_pentagon = sd.get_point(150, 350)
-pentagon_modification(point_pentagon, angle, length)
+pentagon_modification(point_pentagon, angle, length, color)
 
 
 # Часть 1-бис.
