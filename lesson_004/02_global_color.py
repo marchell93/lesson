@@ -80,3 +80,5 @@ while True:
     else:
         print('Вы ввели некоректный номер!')
 sd.pause()
+
+# зачет!

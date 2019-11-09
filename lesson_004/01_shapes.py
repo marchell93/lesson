@@ -162,3 +162,5 @@ pentagon_modification(point_pentagon, angle, length, color)
 
 
 sd.pause()
+
+# зачет!
