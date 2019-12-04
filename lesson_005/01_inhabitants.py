@@ -13,3 +13,5 @@ def room_residents(residents):
 
 room_residents(room_1)
 room_residents(room_2)
+
+# зачет!

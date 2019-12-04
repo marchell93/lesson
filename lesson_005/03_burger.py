@@ -17,6 +17,8 @@
 
 from lesson_005 import my_burger
 
+# TODO Аналогично, не нужно lesson_005
+
 my_burger.burger_bun()
 my_burger.mayonnaise_for_burger()
 my_burger.cutlets_for_burger()

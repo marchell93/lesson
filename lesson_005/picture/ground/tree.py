@@ -21,6 +21,7 @@ def draw_branches(start_point, angle, length, delta):
     draw_branches(start_point=next_point, angle=next_angle_right, length=next_length, delta=delta)
 
 
+# TODO При импортированиии этот код выполниться, надо или удалить или в if __name__ == '__main__' положить
 root_point = sd.get_point(950, 30)
 root_angle = 90
 root_length = 80

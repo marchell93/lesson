@@ -9,6 +9,8 @@ from lesson_005.picture.ground.house import smile
 from lesson_005.picture.sky.sun import sun
 import lesson_005.picture.ground.tree as tree
 
+# TODO Аналогично, не нужно lesson_005
+
 sd.resolution = (1200, 600)
 # Создать пакет, в который скопировать функции отрисовки из предыдущего урока
 #  - радуги
@@ -35,7 +37,7 @@ roof()
 window()
 smile()
 sun()
-tree
+tree  # TODO Надо именно вызов функции сделать, а сейчас оно просто за счет импорта рисуется
 snowfall()
 sd.sleep(0.1)
 
