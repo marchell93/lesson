@@ -1,5 +1,4 @@
 import simple_draw as sd
-from lesson_005.picture.sky.rainbow import rainbow
 
 
 def snowfall():
@@ -27,7 +26,5 @@ def snowfall():
             sd.snowflake(center=point_1, length=length_of_snowflake[i], color=sd.COLOR_WHITE)
             sd.finish_drawing()
         sd.sleep(0.1)
-        # TODO Рисование радуги делаем в основном модуле, здесь этот вызов не очевиден
-        rainbow()
         if sd.user_want_exit():
             break

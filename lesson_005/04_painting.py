@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 import simple_draw as sd
-from lesson_005.picture.ground.ground import land
-from lesson_005.picture.sky.snow import snowfall
-from lesson_005.picture.ground.house import wall
-from lesson_005.picture.ground.house import roof
-from lesson_005.picture.ground.house import window
-from lesson_005.picture.ground.house import smile
-from lesson_005.picture.sky.sun import sun
-import lesson_005.picture.ground.tree as tree
-
-# TODO Аналогично, не нужно lesson_005
+from picture.ground.ground import land
+from picture.sky.snow import snowfall
+from picture.ground.house import wall
+from picture.ground.house import roof
+from picture.ground.house import window
+from picture.ground.house import smile
+from picture.sky.sun import sun
+from picture.ground.tree import tree
+from picture.sky.rainbow import rainbow
 
 sd.resolution = (1200, 600)
 # Создать пакет, в который скопировать функции отрисовки из предыдущего урока
@@ -30,6 +29,11 @@ sd.resolution = (1200, 600)
 # пример см. lesson_005/results/04_painting.jpg
 # Приправить своей фантазией по вкусу (коты? коровы? люди? трактор? что придумается)
 
+# Переменные для функции tree()
+start_point = sd.get_point(950, 30)
+angle = 90
+length = 80
+delta = 30
 # Рисуем картину
 land()
 wall()
@@ -37,7 +41,8 @@ roof()
 window()
 smile()
 sun()
-tree  # TODO Надо именно вызов функции сделать, а сейчас оно просто за счет импорта рисуется
+tree(start_point, angle, length, delta)
+rainbow()
 snowfall()
 sd.sleep(0.1)
 
