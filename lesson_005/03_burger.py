@@ -15,9 +15,7 @@
 # Создать рецепт своего бургера, по вашему вкусу.
 # Если не хватает инградиентов - создать соответствующие функции в модуле my_burger
 
-from lesson_005 import my_burger
-
-# TODO Аналогично, не нужно lesson_005
+import my_burger
 
 my_burger.burger_bun()
 my_burger.mayonnaise_for_burger()
