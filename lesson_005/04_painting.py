@@ -9,6 +9,7 @@ from picture.ground.house import smile
 from picture.sky.sun import sun
 from picture.ground.tree import tree
 from picture.sky.rainbow import rainbow
+from picture.sky.cloud import cloud
 
 sd.resolution = (1200, 600)
 # Создать пакет, в который скопировать функции отрисовки из предыдущего урока
@@ -43,6 +44,7 @@ smile()
 sun()
 tree(start_point, angle, length, delta)
 rainbow()
+cloud()
 snowfall()
 sd.sleep(0.1)
 
