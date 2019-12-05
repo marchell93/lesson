@@ -1,9 +1,6 @@
 import simple_draw as sd
 
 
-sd.resolution = (1200, 600)
-
-
 def tree(start_point, angle, length, delta):
     if length < 5:
         return
