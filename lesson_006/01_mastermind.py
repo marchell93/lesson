@@ -45,10 +45,17 @@
 
 from mastermind_engine import make_number, check_the_number
 from termcolor import cprint, colored
+
+
 if __name__ == '__main__':
+    # TODO Загаданное число в этом модуле у нас храниться не должно, тут должен быть только вызов make_number,
+    #  а само число храниться в движке
     _hidden_number = make_number()
     count_of_iteration = 1
     while True:
+        # TODO Хорошо бы сделать проверку введенного пользователем числа -
+        #  чтобы оно состояло только из цифр, их было четыре, они не повторялись и
+        #  первая цифра не была нулем. Ну и сразу это в отдельную функцию вынести в этом модуле.
         _user_number = input(colored('Введите Ваше число: ', color='yellow'))
         bulls_and_cows = check_the_number(_hidden_number, _user_number)
         cprint(f"быки - {bulls_and_cows['bulls']}, коровы - {bulls_and_cows['cows']}", color='red')

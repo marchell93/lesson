@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import simple_draw as sd
-from snowfall import create_snowflake, draw_snowflake_color, move_snowflake, \
-    count_snowflake_bottom_of_screen, delete_snowflake, create_snowflake_modified
+from snowfall import (create_snowflake, draw_snowflake_color, move_snowflake, count_snowflake_bottom_of_screen,
+                      delete_snowflake, create_snowflake_modified
+                      )
 
 # На основе кода из lesson_004/05_snowfall.py
 # сделать модуль snowfall.py в котором реализовать следующие функции
@@ -17,6 +18,7 @@ from snowfall import create_snowflake, draw_snowflake_color, move_snowflake, \
 
 number_of_snowflake = 20
 # создать_снежинки(N)
+
 x, y, length_of_snowflake = create_snowflake(number_of_snowflake)
 while True:
     sd.start_drawing()
@@ -39,3 +41,5 @@ while True:
         break
 
 sd.pause()
+
+# TODO Есть замечание в модуле в функциями
