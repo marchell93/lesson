@@ -1,17 +1,16 @@
 import simple_draw as sd
 
-# TODO В верхнем регистре пишутся константы, а это у нас переменные, так что их в нижнем регистре нужно писать
-X = []
-Y = []
-LENGTH_of_SNOWFLAKE = []
+x_number_of_snowflake = []
+y_number_of_snowflake = []
+length_number_of_snowflake = []
 
 
 def create_snowflake(number_of_snowflake):
     for _ in range(number_of_snowflake):
-        X.append(sd.random_number(0, 600))
-        Y.append(sd.random_number(300, 650))
-        LENGTH_of_SNOWFLAKE.append(sd.random_number(10, 50))
-    return X, Y, LENGTH_of_SNOWFLAKE
+        x_number_of_snowflake.append(sd.random_number(0, 600))
+        y_number_of_snowflake.append(sd.random_number(300, 650))
+        length_number_of_snowflake.append(sd.random_number(10, 50))
+    return x_number_of_snowflake, y_number_of_snowflake, length_number_of_snowflake
 
 
 def draw_snowflake_color(number_of_snowflake, x, y, length_of_snowflake, color):

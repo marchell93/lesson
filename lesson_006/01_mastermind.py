@@ -45,25 +45,39 @@
 
 from mastermind_engine import make_number, check_the_number
 from termcolor import cprint, colored
+from re import search
+
+
+def verify_user_number(user_number):
+    if len(user_number) == 4:
+        if user_number[0] != 0:
+            a = search(r"\d+", user_number)
+            if len(a[0]) == 4:
+                for i in range(len(user_number)):
+                    if user_number.count(user_number[i]) == 1:
+                        continue
+                    else:
+                        print('Вы ввели повторяющиеся числа, введите заново неповторяющиеся значения!!!')
+                        break
+            else:
+                print('Вы ввели неверные символы, вводите только цифры!!!')
+        else:
+            print('Первое введеное число равно нулю!!!')
+    else:
+        print('Вы ввели неверное количество символов!!!')
 
 
 if __name__ == '__main__':
-    # TODO Загаданное число в этом модуле у нас храниться не должно, тут должен быть только вызов make_number,
-    #  а само число храниться в движке
-    _hidden_number = make_number()
     count_of_iteration = 1
     while True:
-        # TODO Хорошо бы сделать проверку введенного пользователем числа -
-        #  чтобы оно состояло только из цифр, их было четыре, они не повторялись и
-        #  первая цифра не была нулем. Ну и сразу это в отдельную функцию вынести в этом модуле.
         _user_number = input(colored('Введите Ваше число: ', color='yellow'))
-        bulls_and_cows = check_the_number(_hidden_number, _user_number)
+        verify_user_number(_user_number)
+        bulls_and_cows = check_the_number(make_number(), _user_number)
         cprint(f"быки - {bulls_and_cows['bulls']}, коровы - {bulls_and_cows['cows']}", color='red')
         if bulls_and_cows['bulls'] == 4:
             cprint(f'Вы угадали число {_user_number} за {count_of_iteration} ходов!!!', color='magenta')
             _user_questions = str(input(colored('Хотите сыграть еще партию?(yes/no): ', color='blue')))
             if _user_questions == 'yes':
-                _hidden_number = make_number()
                 count_of_iteration = 1
                 continue
             else:

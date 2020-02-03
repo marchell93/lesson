@@ -41,5 +41,3 @@ while True:
         break
 
 sd.pause()
-
-# TODO Есть замечание в модуле в функциями
