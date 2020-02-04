@@ -43,53 +43,18 @@
 # Это пример применения SOLID принципа (см https://goo.gl/GFMoaI) в архитектуре программ.
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
-from mastermind_engine import make_number, check_the_number
+from mastermind_engine import make_number, input_and_verify_user_number, check_the_number, get_random_number
 from termcolor import cprint, colored
-from re import search
-
-
-def verify_user_number(user_number):
-    # TODO Так получается, что мы сообщение о неверно введенном номере вывели, и дальше его проверять пошли, то есть
-    #  толку и нет от проверки. Надо организовать бесокнечный цикл (как в 4 модуле)
-    #  и отпускать из него юзера только если он ввел верное значение.
-    #  И можно сделать без вложенности -
-    #  если не число -
-    #      одно сообщение
-    #  если-иначе начинается с 0 -
-    #      другое
-    #  ....
-    #  иначе -
-    #      вышли из функции
-    if len(user_number) == 4:
-        if user_number[0] != 0:
-            a = search(r"\d+", user_number)  # TODO У строк есть метод isdigit() - то что нужно
-            if len(a[0]) == 4:
-                for i in range(len(user_number)):  # TODO Можно привести к множеству и проверить его длину
-                    if user_number.count(user_number[i]) == 1:
-                        continue
-                    else:
-                        print('Вы ввели повторяющиеся числа, введите заново неповторяющиеся значения!!!')
-                        break
-            else:
-                print('Вы ввели неверные символы, вводите только цифры!!!')
-        else:
-            print('Первое введеное число равно нулю!!!')
-    else:
-        print('Вы ввели неверное количество символов!!!')
-
 
 if __name__ == '__main__':
     count_of_iteration = 1
+    make_number()
     while True:
-        _user_number = input(colored('Введите Ваше число: ', color='yellow'))
-        verify_user_number(_user_number)
-        # TODO Так у нас число каждый раз загадывается новое. Надо один раз вызвать make_number() до цикла.
-        #   А _user_number здесь быть не должно. Функция check_the_number находится в движке, и может
-        #   получать это значение из глобальной области видимости
-        bulls_and_cows = check_the_number(make_number(), _user_number)
+        input_and_verify_user_number()
+        bulls_and_cows = check_the_number()
         cprint(f"быки - {bulls_and_cows['bulls']}, коровы - {bulls_and_cows['cows']}", color='red')
         if bulls_and_cows['bulls'] == 4:
-            cprint(f'Вы угадали число {_user_number} за {count_of_iteration} ходов!!!', color='magenta')
+            cprint(f'Вы угадали число {get_random_number()} за {count_of_iteration} ходов!!!', color='magenta')
             _user_questions = str(input(colored('Хотите сыграть еще партию?(yes/no): ', color='blue')))
             if _user_questions == 'yes':
                 count_of_iteration = 1
