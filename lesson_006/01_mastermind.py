@@ -43,26 +43,42 @@
 # Это пример применения SOLID принципа (см https://goo.gl/GFMoaI) в архитектуре программ.
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
-from mastermind_engine import make_number, input_and_verify_user_number, check_the_number, get_random_number
 from termcolor import cprint, colored
+from mastermind_engine import make_number, check_the_number
 
-# TODO Принято сначала делать импорт встроенных/загруженных библиотек, а потом уже своих модулей
+user_number = '0'
+
+
+def input_and_verify_user_number():
+    while True:
+        global user_number
+        user_number = input('Введите Ваше число: ')
+        if not user_number.isdigit():
+            print('Вы ввели неверные символы, вводите только цифры!')
+        elif user_number[0] == '0':
+            print('Первое введеное число равно нулю, такого быть не должно, введите число, '
+                  'которое начинается с другой цифры!')
+        elif len(user_number) != 4:
+            print('Вы ввели неверное количество символов, введите 4 цифры!')
+        elif len(set(user_number)) != 4:
+            print('Вы ввели повторяющиеся числа, введите заново значение с неповторяющимися цифрами!')
+        else:
+            break
+
 
 if __name__ == '__main__':
     count_of_iteration = 1
     make_number()
     while True:
         input_and_verify_user_number()
-        bulls_and_cows = check_the_number()
+        bulls_and_cows = check_the_number(user_number)
         cprint(f"быки - {bulls_and_cows['bulls']}, коровы - {bulls_and_cows['cows']}", color='red')
         if bulls_and_cows['bulls'] == 4:
-            # TODO Если чел угадал число, то можно распечатать его ввод :) А функцию get_random_number удаляем,
-            #   здесь у нас не должно быть прямого доступа к загаданному числу
-            cprint(f'Вы угадали число {get_random_number()} за {count_of_iteration} ходов!!!', color='magenta')
+            cprint(f'Вы угадали число {user_number} за {count_of_iteration} ходов!!!', color='magenta')
             _user_questions = str(input(colored('Хотите сыграть еще партию?(yes/no): ', color='blue')))
             if _user_questions == 'yes':
                 count_of_iteration = 1
-                # TODO Здесь еще число надо заново загадать
+                make_number()
                 continue
             else:
                 break
