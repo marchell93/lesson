@@ -15,6 +15,11 @@ def make_number():
     print(random_number)
 
 
+# TODO Нет, эту функцию надо было в клиенте оставить.
+#  Движок теоретически может использовать разные клиенты - веб, чат-боты и прочее -
+#  они знают как брать от пользователя данные и выдавать ему результат.
+#  При этом они могут быть на разных языках - русском, китайском и т.д.
+#  Движок делает только саму суть игры, ее логику.
 def input_and_verify_user_number():
     while True:
         global user_number
@@ -32,6 +37,7 @@ def input_and_verify_user_number():
             break
 
 
+# TODO А здесь нужен входной аргумент, через который и передавать введенное пользователем число
 def check_the_number():
     animals = {'bulls': 0, 'cows': 0}
     for i in range(0, len(random_number)):
@@ -42,6 +48,7 @@ def check_the_number():
     return animals
 
 
+# TODO Это удаляем, в клиенте пояснил
 def get_random_number():
     """
         Функция для отображения загадонного числа при окончании игры

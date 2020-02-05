@@ -46,6 +46,8 @@
 from mastermind_engine import make_number, input_and_verify_user_number, check_the_number, get_random_number
 from termcolor import cprint, colored
 
+# TODO Принято сначала делать импорт встроенных/загруженных библиотек, а потом уже своих модулей
+
 if __name__ == '__main__':
     count_of_iteration = 1
     make_number()
@@ -54,10 +56,13 @@ if __name__ == '__main__':
         bulls_and_cows = check_the_number()
         cprint(f"быки - {bulls_and_cows['bulls']}, коровы - {bulls_and_cows['cows']}", color='red')
         if bulls_and_cows['bulls'] == 4:
+            # TODO Если чел угадал число, то можно распечатать его ввод :) А функцию get_random_number удаляем,
+            #   здесь у нас не должно быть прямого доступа к загаданному числу
             cprint(f'Вы угадали число {get_random_number()} за {count_of_iteration} ходов!!!', color='magenta')
             _user_questions = str(input(colored('Хотите сыграть еще партию?(yes/no): ', color='blue')))
             if _user_questions == 'yes':
                 count_of_iteration = 1
+                # TODO Здесь еще число надо заново загадать
                 continue
             else:
                 break
