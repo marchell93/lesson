@@ -84,3 +84,5 @@ if __name__ == '__main__':
                 break
         count_of_iteration += 1
     cprint('Спасибо, что играли в нашу игру!!!', color='cyan')
+
+# зачет!
