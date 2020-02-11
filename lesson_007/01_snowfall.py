@@ -82,7 +82,7 @@ while True:
         flake.move()
         flake.draw()
     fallen_flakes = get_fallen_flakes()  # подчитать сколько снежинок уже упало
-    if fallen_flakes != 0:
+    if fallen_flakes:
         append_flakes(fallen_flakes)  # добавить еще сверху
     sd.sleep(0.1)
     if sd.user_want_exit():
