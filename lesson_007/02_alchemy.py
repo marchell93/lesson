@@ -23,12 +23,15 @@
 class Water:
 
     def __init__(self):
+        # TODO obj не очень имя здесь - название или элеменет тогда
         self.obj = 'Вода'
 
     def __str__(self):
         return f'{self.obj}'
 
     def __add__(self, other):
+        # TODO Так идет работа со строками, а нам нужно именно на соответствие определенному классу проверять.
+        #  Удобно делать это через функцию isinstance()
         if other.obj == 'Воздух':
             return Storm()
         elif other.obj == 'Огонь':
@@ -90,6 +93,7 @@ class Ground:
             return Dirt()
         elif other.obj == 'Огонь':
             return Lava()
+        # TODO Третий элемент еще нужен
         else:
             return None
 
