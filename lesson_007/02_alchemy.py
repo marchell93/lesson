@@ -23,20 +23,17 @@
 class Water:
 
     def __init__(self):
-        # TODO obj не очень имя здесь - название или элеменет тогда
-        self.obj = 'Вода'
+        self.element = 'Вода'
 
     def __str__(self):
-        return f'{self.obj}'
+        return f'{self.element}'
 
     def __add__(self, other):
-        # TODO Так идет работа со строками, а нам нужно именно на соответствие определенному классу проверять.
-        #  Удобно делать это через функцию isinstance()
-        if other.obj == 'Воздух':
+        if isinstance(other, Air):
             return Storm()
-        elif other.obj == 'Огонь':
+        elif isinstance(other, Fire):
             return Vapor()
-        elif other.obj == 'Земля':
+        elif isinstance(other, Ground):
             return Dirt()
         else:
             return None
@@ -45,17 +42,17 @@ class Water:
 class Air:
 
     def __init__(self):
-        self.obj = 'Воздух'
+        self.element = 'Воздух'
 
     def __str__(self):
-        return f'{self.obj}'
+        return f'{self.element}'
 
     def __add__(self, other):
-        if other.obj == 'Огонь':
+        if isinstance(other, Fire):
             return Thunderbolt()
-        elif other.obj == 'Земля':
+        elif isinstance(other, Ground):
             return Dust()
-        elif other.obj == 'Вода':
+        elif isinstance(other, Water):
             return Storm()
         else:
             return None
@@ -64,17 +61,17 @@ class Air:
 class Fire:
 
     def __init__(self):
-        self.obj = 'Огонь'
+        self.element = 'Огонь'
 
     def __str__(self):
-        return f'{self.obj}'
+        return f'{self.element}'
 
     def __add__(self, other):
-        if other.obj == 'Земля':
+        if isinstance(other, Ground):
             return Lava()
-        elif other.obj == 'Вода':
+        elif isinstance(other, Water):
             return Vapor()
-        elif other.obj == 'Воздух':
+        elif isinstance(other, Air):
             return Thunderbolt()
         else:
             return None
@@ -83,17 +80,18 @@ class Fire:
 class Ground:
 
     def __init__(self):
-        self.obj = 'Земля'
+        self.element = 'Земля'
 
     def __str__(self):
-        return f'{self.obj}'
+        return f'{self.element}'
 
     def __add__(self, other):
-        if other.obj == 'Вода':
+        if isinstance(other, Water):
             return Dirt()
-        elif other.obj == 'Огонь':
+        elif isinstance(other, Air):
+            return Dust()
+        elif isinstance(other, Fire):
             return Lava()
-        # TODO Третий элемент еще нужен
         else:
             return None
 
@@ -101,55 +99,55 @@ class Ground:
 class Storm:
 
     def __init__(self):
-        self.obj = 'Шторм'
+        self.element = 'Шторм'
 
     def __str__(self):
-        return f'{self.obj}'
+        return f'{self.element}'
 
 
 class Vapor:
 
     def __init__(self):
-        self.obj = 'Пар'
+        self.element = 'Пар'
 
     def __str__(self):
-        return f'{self.obj}'
+        return f'{self.element}'
 
 
 class Dirt:
 
     def __init__(self):
-        self.obj = 'Грязь'
+        self.element = 'Грязь'
 
     def __str__(self):
-        return f'{self.obj}'
+        return f'{self.element}'
 
 
 class Thunderbolt:
 
     def __init__(self):
-        self.obj = 'Молния'
+        self.element = 'Молния'
 
     def __str__(self):
-        return f'{self.obj}'
+        return f'{self.element}'
 
 
 class Dust:
 
     def __init__(self):
-        self.obj = 'Пыль'
+        self.element = 'Пыль'
 
     def __str__(self):
-        return f'{self.obj}'
+        return f'{self.element}'
 
 
 class Lava:
 
     def __init__(self):
-        self.obj = 'Лава'
+        self.element = 'Лава'
 
     def __str__(self):
-        return f'{self.obj}'
+        return f'{self.element}'
 
 
 print(f'{Water()} + {Air()} = {Water() + Air()}')

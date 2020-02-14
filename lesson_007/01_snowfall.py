@@ -30,12 +30,7 @@ class Snowflake:
             sd.snowflake(center=self.point, length=self.length, color=sd.background_color)
 
     def can_fall(self):
-        # TODO Можно сразу возвращать результат сравнения -
-        #   return self.y > self.length
-        if self.y > self.length:
-            return True
-        else:
-            return False
+        return self.y > self.length
 
 
 flake = Snowflake()
@@ -64,8 +59,7 @@ def get_flakes(count):
 def get_fallen_flakes():
     fallen_flakes_count = 0
     for i, existing_flake in enumerate(flakes):
-        # TODO У снежинки есть метод can_fall
-        if existing_flake.y < existing_flake.length:
+        if not existing_flake.can_fall():
             fallen_flakes_count += 1
             existing_flake.clear_previous_picture()
             del flakes[i]

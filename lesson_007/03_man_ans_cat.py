@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from random import randint
+from termcolor import cprint
 
 # Доработать практическую часть урока lesson_007/python_snippets/08_practice.py
 
@@ -24,10 +25,6 @@ from random import randint
 # что будет делать сегодня
 
 # Человеку и коту надо вместе прожить 365 дней.
-
-from termcolor import cprint
-
-# TODO Сделаем импорт в одном месте
 
 
 class Man:
@@ -201,5 +198,3 @@ for day in range(1, 366):
 # Им всем вместе так же надо прожить 365 дней.
 
 # (Можно определить критическое количество котов, которое может прокормить человек...)
-
-# TODO В остальном все отлично
