@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from termcolor import cprint
-from random import randint
-
-
 ######################################################## Часть первая
 #
 # Создать модель жизни небольшой семьи.
@@ -42,17 +38,11 @@ from random import randint
 #
 # Подвести итоги жизни за год: сколько было заработано денег, сколько сьедено еды, сколько куплено шуб.
 
-# TODO принято делать импорт в таком порядке:
-#  встроенные библиотеки
-#  внешние (загруженные) библиотеки
-#  свои модули/пакеты
+from random import randint
+from termcolor import cprint
 
 
 class House:
-    # TODO Зарабатываем деньги муж - переносим это в его класс
-    all_money = 0
-    # TODO А едят все люди - в класс человека переносим
-    all_food = 0
 
     def __init__(self):
         self.money = 100
@@ -64,6 +54,7 @@ class House:
 
 
 class Man:
+    all_food = 0
 
     def __init__(self, name, house):
         self.name = name
@@ -71,40 +62,35 @@ class Man:
         self.fullness = 30
         self.happiness = 100
 
+    def __str__(self):
+        return f'У {self.name} сытость {self.fullness}, счастья {self.happiness}'
+
     def eat(self):
-        # TODO Надо проверять, что еда вообще есть
-        self.fullness += 20
-        self.house.food -= 20
-        cprint(f'{self.name} покушал', 'magenta')
-        House.all_food += 20
+        if self.house.food >= 20:
+            self.fullness += 20
+            self.house.food -= 20
+            cprint(f'{self.name} покушал', 'magenta')
+            Man.all_food += 20
 
     def happy(self):
         if self.house.dirt > 90:
             self.happiness -= 10
 
-
-class Husband(Man):
-
-    # TODO Если мы ничего нового по сравнению с родительским конструктором не добавили, то в такой записи смысла нет,
-    #  можно удалить
-    def __init__(self, name, house):
-        super().__init__(name, house)
-
-    # TODO Это можно в класс человека убрать. Пусть у жены (а потом и у ребенка)тоже распечатка с именем будет
-    def __str__(self):
-        return f'У {self.name} сытость {self.fullness}, счастья {self.happiness}'
-
-    def act(self):
-        # TODO Проверку на смерть лучше вынести в отдельный метод в базовый класс и вызывать его в цикле жизни.
-        #  И если кто-то из людей умер, то останавливать цикл вообще.
+    def death(self):
         if self.fullness <= 0:
             cprint(f'{self.name} умер от голода', 'red')
-            return
+            return True
         elif self.happiness < 10:
             cprint(f'{self.name} умер от депресии', 'red')
-            return
+            return True
+
+
+class Husband(Man):
+    all_money = 0
+
+    def act(self):
         dice = randint(1, 2)
-        if self.fullness < 15:
+        if self.fullness <= 10:
             self.eat()
         elif self.house.money < 100:
             self.work()
@@ -115,14 +101,11 @@ class Husband(Man):
         elif dice == 2:
             self.gaming()
 
-    # TODO Удалим тогда вообще эту строку
-    # def eat(self): данный метод проинициализирован в классе Man
-
     def work(self):
         self.house.money += 150
         self.fullness -= 10
         cprint(f'Муж сходил на работу!!!', 'green')
-        House.all_money += 150
+        Husband.all_money += 150
 
     def gaming(self):
         self.happiness += 20
@@ -130,25 +113,12 @@ class Husband(Man):
         cprint(f'Муж поиграл в WoT!!!', 'grey')
 
 
-# TODO В классе жены аналогичные замечания. Удаляем лишнее и не забываем проверять еду/деньги
 class Wife(Man):
     all_fur_coat = 0
 
-    def __init__(self, name, house):
-        super().__init__(name, house)
-
-    def __str__(self):
-        return f'У жены сытость {self.fullness}, счастья {self.happiness}'
-
     def act(self):
-        if self.fullness <= 0:
-            cprint(f'{self.name} умерла от голода', 'red')
-            return
-        elif self.happiness <= 0:
-            cprint(f'{self.name} умерла от депресии', 'red')
-            return
-        dice = randint(1, 2)
-        if self.fullness < 15:
+        dice = 1
+        if self.fullness <= 10:
             self.eat()
         elif self.house.food < 20:
             self.shopping()
@@ -158,8 +128,6 @@ class Wife(Man):
             self.buy_fur_coat()
         elif dice == 1:
             self.shopping()
-
-    # def eat(self): данный метод проинициализирован в классе Man
 
     def shopping(self):
         self.house.food += 30
@@ -186,6 +154,8 @@ masha = Wife(name='Маша', house=home)
 
 for day in range(365):
     cprint('================== День {} =================='.format(day), color='red')
+    if serge.death() or masha.death():
+        break
     home.dirt += 5
     serge.act()
     masha.act()
@@ -193,8 +163,8 @@ for day in range(365):
     cprint(masha, color='cyan')
     cprint(home, color='cyan')
 cprint('Отчёт за год:', 'yellow')
-cprint(f'Заработано {House.all_money} денег', 'yellow')
-cprint(f'Съедено {House.all_food} еды', 'yellow')
+cprint(f'Заработано {Husband.all_money} денег', 'yellow')
+cprint(f'Съедено {Man.all_food} еды', 'yellow')
 cprint(f'Куплено {Wife.all_fur_coat} шуб', 'yellow')
 
 # TODO после реализации первой части - отдать на проверку учителю
