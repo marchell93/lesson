@@ -198,8 +198,10 @@ cprint(f'Куплено {Wife.all_fur_coat} шуб', 'yellow')
 
 class Cat:
 
-    def __init__(self):
-        pass
+    def __init__(self, name, house):
+        self.name = name
+        self.house = house
+        self.fullness = 30
 
     def act(self):
         pass
@@ -208,10 +210,12 @@ class Cat:
         pass
 
     def sleep(self):
-        pass
+        self.fullness -= 10
 
     def soil(self):
-        pass
+        self.fullness -= 10
+        self.house.dirt += 5
+
 
 
 ######################################################## Часть вторая бис
