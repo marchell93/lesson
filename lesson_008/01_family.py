@@ -186,9 +186,6 @@ cprint(f'Заработано {Husband.all_money} денег', 'yellow')
 cprint(f'Съедено {Man.all_food} еды', 'yellow')
 cprint(f'Куплено {Wife.all_fur_coat} шуб', 'yellow')
 
-# TODO Можно делать вторую часть
-
-# TODO после реализации первой части - отдать на проверку учителю
 
 ######################################################## Часть вторая
 #
@@ -222,6 +219,7 @@ class Cat:
         self.house = house
         self.fullness = 30
 
+    # TODO Вынесем проверку на смерть у кота в отдельный метод, как у Человека
     def act(self):
         if self.fullness <= 0:
             cprint(f'Кот {self.name} умер...', color='red')
@@ -291,6 +289,7 @@ class Child:
 # отправить на проверку учителем.
 
 
+# TODO И запустим цикл жизни с котом
 # home = House()
 # serge = Husband(name='Сережа')
 # masha = Wife(name='Маша')
