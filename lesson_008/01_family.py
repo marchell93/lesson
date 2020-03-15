@@ -231,8 +231,6 @@ class Child(Man):
 # влить в мастер все коммиты из ветки develop и разрешить все конфликты
 # отправить на проверку учителем.
 
-
-# TODO Запустим цикл жизни с ребенком, а без него можно уже удалить
 home = House()
 serge = Husband(name='Сережа', house=home)
 masha = Wife(name='Маша', house=home)
