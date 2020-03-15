@@ -72,6 +72,8 @@ class Man:
             self.house.food -= self.quantity_food_consumed
             cprint(f'{self.name} покушал', 'magenta')
             Man.all_food += self.quantity_food_consumed
+        else:
+            cprint(f'В доме нет человеческой еды', 'red')
 
     def happy(self):
         if self.house.dirt > 90:
@@ -90,6 +92,7 @@ class Husband(Man):
     all_money = 0
 
     def act(self):
+        self.happy()
         dice = randint(1, 2)
         if self.fullness <= 10:
             self.eat()
@@ -118,7 +121,8 @@ class Wife(Man):
     all_fur_coat = 0
 
     def act(self):
-        dice = 1
+        self.happy()
+        dice = randint(1, 2)
         if self.fullness <= 10:
             self.eat()
         elif self.house.food < 20:
@@ -129,10 +133,12 @@ class Wife(Man):
             self.buy_fur_coat()
         elif dice == 1:
             self.shopping()
+        elif dice == 2:
+            self.shopping()
 
     def shopping(self):
-        self.house.food += 30
-        self.house.money -= 30
+        self.house.food += 50
+        self.house.money -= 50
         self.fullness -= 10
         cprint('Жена сходила в магазин и купила еды!!!', 'yellow')
 
@@ -147,30 +153,6 @@ class Wife(Man):
         self.house.dirt -= 90
         self.fullness -= 10
         cprint('Жена убралась в доме', 'red')
-
-
-home = House()
-serge = Husband(name='Сережа', house=home)
-masha = Wife(name='Маша', house=home)
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    if serge.death() or masha.death():
-        break
-    home.dirt += 5
-    serge.act()
-    masha.act()
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(home, color='cyan')
-cprint('Отчёт за год:', 'yellow')
-cprint(f'Заработано {Husband.all_money} денег', 'yellow')
-cprint(f'Съедено {Man.all_food} еды', 'yellow')
-cprint(f'Куплено {Wife.all_fur_coat} шуб', 'yellow')
-
-# TODO Можно делать вторую часть
-
-# TODO после реализации первой части - отдать на проверку учителю
 
 ######################################################## Часть вторая
 #
@@ -233,7 +215,7 @@ class Child(Man):
         self.quantity_food_consumed = 10
 
     def act(self):
-        if self.fullness < 10:
+        if self.fullness <= 15:
             self.eat()
         else:
             self.sleep()
@@ -269,7 +251,12 @@ for day in range(365):
     cprint(serge, color='cyan')
     cprint(masha, color='cyan')
     cprint(kolya, color='cyan')
+    cprint(home, color='cyan')
 #     cprint(murzik, color='cyan')
+cprint('Отчёт за год:', 'yellow')
+cprint(f'Заработано {Husband.all_money} денег', 'yellow')
+cprint(f'Съедено {Man.all_food} еды', 'yellow')
+cprint(f'Куплено {Wife.all_fur_coat} шуб', 'yellow')
 
 # Усложненное задание (делать по желанию)
 #
