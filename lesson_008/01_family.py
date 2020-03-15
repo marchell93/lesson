@@ -256,6 +256,8 @@ cprint(f'Заработано {Husband.all_money} денег', 'yellow')
 cprint(f'Съедено {Man.all_food} еды', 'yellow')
 cprint(f'Куплено {Wife.all_fur_coat} шуб', 'yellow')
 
+# TODO Все ок
+
 # Усложненное задание (делать по желанию)
 #
 # Сделать из семьи любителей котов - пусть котов будет 3, или даже 5-10.
