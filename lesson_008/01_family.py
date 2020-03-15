@@ -61,16 +61,17 @@ class Man:
         self.house = house
         self.fullness = 30
         self.happiness = 100
+        self.quantity_food_consumed = 20
 
     def __str__(self):
         return f'У {self.name} сытость {self.fullness}, счастья {self.happiness}'
 
     def eat(self):
-        if self.house.food >= 20:
-            self.fullness += 20
-            self.house.food -= 20
+        if self.house.food >= self.quantity_food_consumed:
+            self.fullness += self.quantity_food_consumed
+            self.house.food -= self.quantity_food_consumed
             cprint(f'{self.name} покушал', 'magenta')
-            Man.all_food += 20
+            Man.all_food += self.quantity_food_consumed
 
     def happy(self):
         if self.house.dirt > 90:
@@ -227,25 +228,15 @@ class Cat:
 
 class Child(Man):
 
+    def __init__(self, name, house):
+        super().__init__(name=name, house=house)
+        self.quantity_food_consumed = 10
+
     def act(self):
-        if self.fullness < 0:
-            cprint(f'Ребенок {self.name} умер...', color='red')
-            return
         if self.fullness < 10:
             self.eat()
         else:
             self.sleep()
-
-    # TODO Видно, что у Человека и у Ребенка алгоритм этого метода одинаковый, отличается только число -
-    #  количество_съедаемой_еды. Значит можно не переопределять этот метод, а или в него
-    #  передавать эту переменную как входной аргумент, или сделать у самого объекта Человек параметр
-    #  количество_съедаемой_еды и у Ребенка переопределить его.
-    def eat(self):
-        if self.house.food >= 10:
-            self.fullness += 10
-            self.house.food -= 10
-            cprint(f'Малыш {self.name} покушал', 'magenta')
-            Man.all_food += 10
 
     def sleep(self):
         self.fullness -= 5
@@ -260,21 +251,24 @@ class Child(Man):
 
 
 # TODO Запустим цикл жизни с ребенком, а без него можно уже удалить
-# home = House()
-# serge = Husband(name='Сережа')
-# masha = Wife(name='Маша')
-# kolya = Child(name='Коля')
+home = House()
+serge = Husband(name='Сережа', house=home)
+masha = Wife(name='Маша', house=home)
+kolya = Child(name='Коля', house=home)
 # murzik = Cat(name='Мурзик')
 #
-# for day in range(365):
-#     cprint('================== День {} =================='.format(day), color='red')
-#     serge.act()
-#     masha.act()
-#     kolya.act()
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    if serge.death() or masha.death() or kolya.death():
+        break
+    home.dirt += 5
+    serge.act()
+    masha.act()
+    kolya.act()
 #     murzik.act()
-#     cprint(serge, color='cyan')
-#     cprint(masha, color='cyan')
-#     cprint(kolya, color='cyan')
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(kolya, color='cyan')
 #     cprint(murzik, color='cyan')
 
 # Усложненное задание (делать по желанию)
