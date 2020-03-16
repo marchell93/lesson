@@ -300,11 +300,9 @@ for day in range(365):
     cprint(home, color='cyan')
 cprint('Отчёт за год:', 'yellow')
 cprint(f'Заработано {Husband.all_money} денег', 'yellow')
-cprint(f'Съедено {Man.all_food} еды', 'yellow')
+cprint(f'Съедено {Man.all_food} человеческой еды', 'yellow')
 cprint(f'Куплено {Wife.all_fur_coat} шуб', 'yellow')
-cprint(f'Съедено котами {Cat.all_cat_food} еды', 'yellow')
-
-# TODO Все ок
+cprint(f'Съедено котом {Cat.all_cat_food} еды', 'yellow')
 
 # Усложненное задание (делать по желанию)
 #
