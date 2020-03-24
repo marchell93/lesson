@@ -284,7 +284,7 @@ masha = Wife(name='Маша', house=home)
 kolya = Child(name='Коля', house=home)
 murzik = Cat(name='Мурзик', house=home)
 
-for day in range(365):
+for day in range(1, 366):
     cprint('================== День {} =================='.format(day), color='red')
     if serge.death() or masha.death() or kolya.death() or murzik.death():
         break
@@ -325,3 +325,5 @@ cprint(f'Съедено котом {Cat.all_cat_food} еды', 'yellow')
 #       for salary in range(50, 401, 50):
 #           max_cats = life.experiment(salary)
 #           print(f'При зарплате {salary} максимально можно прокормить {max_cats} котов')
+
+# зачет!
