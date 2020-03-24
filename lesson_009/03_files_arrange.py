@@ -34,7 +34,42 @@ import os, time, shutil
 # Чтение документации/гугла по функциям - приветствуется. Как и поиск альтернативных вариантов :)
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
 
-# TODO здесь ваш код
+
+class FilesArrange:
+
+    def __init__(self, input_path, output_path):
+        self.input_path = os.path.normpath(input_path)
+        self.output_path = os.path.normpath(output_path)
+        self.full_file_path = None
+        self.full_output_path = None
+
+    def process(self):
+        for dirpath, dirnames, filenames in os.walk(self.input_path):
+            for file in filenames:
+                self.get_time_files(dirpath, file)
+                self.create_date_dirs()
+                self.copy_files_to_date_dirs()
+
+    def get_time_files(self, dirpath, file):
+        self.full_file_path = os.path.join(dirpath, file)
+        secs_create_file = os.path.getmtime(self.full_file_path)
+        file_time = time.gmtime(secs_create_file)
+        self.full_output_path = os.path.join(self.output_path, f'{file_time[0]}\\{file_time[1]:02d}')
+
+    def create_date_dirs(self):
+        if not os.path.exists(self.full_output_path):
+            os.makedirs(self.full_output_path)
+            print(f'Создали директорию {self.full_output_path}')
+
+    def copy_files_to_date_dirs(self):
+        shutil.copy2(self.full_file_path, self.full_output_path)
+        print(f'Скорировали файл {self.full_file_path} в директорию {self.full_output_path}')
+
+
+in_path = os.path.join(os.path.curdir, 'icons')
+out_path = os.path.join(os.path.curdir, 'icons_by_year')
+fa = FilesArrange(in_path, out_path)
+fa.process()
 
 # Усложненное задание (делать по желанию)
 # Нужно обрабатывать zip-файл, содержащий фотографии, без предварительного извлечения файлов в папку.

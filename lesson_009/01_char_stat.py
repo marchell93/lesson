@@ -56,6 +56,23 @@ class StatisticChar:
         sorted_stat = sorted(self.work_stat.items(), key=lambda pair: pair[1], reverse=True)
         self.report_stat = dict(sorted_stat)
 
+    def write_on_console(self):
+        count = 0
+        format_chars = ['+', '-', 'буква', 'частота', 'итого']
+        head_line = f'{format_chars[0]:-<11}{format_chars[0]:-<11}{format_chars[0]}'
+        words_line = f'|{format_chars[2]:^10}|{format_chars[3]:^10}|'
+        print(head_line)
+        print(words_line)
+        print(head_line)
+        for key, value in self.report_stat.items():
+            count += int(value)
+            line = f'|{key:^10}|{value:^10}|'
+            print(line)
+        print(head_line)
+        count_line = f'|{format_chars[4]:^10}|{str(count):^10}|'
+        print(count_line)
+        print(head_line)
+
 
 class StatisticCharFreqIncrease(StatisticChar):
 
@@ -79,10 +96,33 @@ class StatisticCharAlpDecrease(StatisticChar):
 
 
 if __name__ == '__main__':
-    input_path = os.path.normpath('D:\Skillbox\Python - '
-                              'разработчик с нуля\python_base\lesson_009\python_snippets/voyna-i-mir.txt.zip')
-    stchar = StatisticChar(input_path)
-    stchar.collect()
+    input_path = os.path.normpath(f'{os.path.curdir}/python_snippets/voyna-i-mir.txt.zip')
+    static_class = None
+    while static_class is None:
+        flag_char = int(input('Если Вы желаете упорядочить буквенные символы произведения Войны и мир по частоте по '
+                              'убыванию нажмите 1\nЕсли Вы желаете упорядочить буквенные символы произведения Войны и '
+                              'мир по частоте по возрастанию нажмите 2\nЕсли Вы желаете упорядочить буквенные символы '
+                              'произведения Войны и мир по алфавиту по возрастанию нажмите 3\nЕсли Вы желаете '
+                              'упорядочить буквенные символы произведения Войны и мир по алфавиту по убыванию нажмите '
+                              '4\n'))
+        if flag_char == 1:
+            static_class = StatisticChar
+            print('Вы выбрали сортировку по частоте по убыванию')
+        elif flag_char == 2:
+            static_class = StatisticCharFreqIncrease
+            print('Вы выбрали сортировку по частоте по возрастанию')
+        elif flag_char == 3:
+            static_class = StatisticCharAlpIncrease
+            print('Вы выбрали сортировку по алфавиту по возрастанию')
+        elif flag_char == 4:
+            static_class = StatisticCharAlpDecrease
+            print('Вы выбрали сортировку по алфавиту по убыванию')
+        else:
+            print(f'Вы ввели неверное число "{flag_char}", попробуйте еще раз!!!')
+    stat = static_class(input_path)
+    stat.collect()
+    stat.sorting_method()
+    stat.write_on_console()
 
 
 # После выполнения первого этапа нужно сделать упорядочивание статистики
