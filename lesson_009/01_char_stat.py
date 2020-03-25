@@ -52,6 +52,8 @@ class StatisticChar:
                 else:
                     self.work_stat[char] = 1
 
+    # TODO В базовом классе этот метод стоит оставить пустым (просто pass внутри), а это конкретное определение тоже
+    #  в неследнике сделать
     def sorting_method(self):
         sorted_stat = sorted(self.work_stat.items(), key=lambda pair: pair[1], reverse=True)
         self.report_stat = dict(sorted_stat)
@@ -96,6 +98,8 @@ class StatisticCharAlpDecrease(StatisticChar):
 
 
 if __name__ == '__main__':
+    # TODO Разделители лучше не вручную писать, а составлять путь через os.path.joint() - так разделители
+    #   будут сформированы в зависимости от ОС
     input_path = os.path.normpath(f'{os.path.curdir}/python_snippets/voyna-i-mir.txt.zip')
     static_class = None
     while static_class is None:
@@ -105,6 +109,7 @@ if __name__ == '__main__':
                               'произведения Войны и мир по алфавиту по возрастанию нажмите 3\nЕсли Вы желаете '
                               'упорядочить буквенные символы произведения Войны и мир по алфавиту по убыванию нажмите '
                               '4\n'))
+        # TODO Лучше сделать словарик по типу, как в 4 модуле мы делали
         if flag_char == 1:
             static_class = StatisticChar
             print('Вы выбрали сортировку по частоте по убыванию')

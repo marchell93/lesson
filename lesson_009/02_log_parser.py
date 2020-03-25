@@ -42,6 +42,7 @@ class ProcessingEvent:
         times_data = time.strptime(line, '%Y-%m-%d %H:%M:%S')
         self.pooling_of_data(times_data=times_data)
 
+    # TODO Аналогично здесь, как в 01 я написал
     def pooling_of_data(self, times_data):
         like_times = f'{times_data[0]}-{times_data[1]:02d}-{times_data[2]:02d} {times_data[3]:02d}:{times_data[4]:02d}'
         if like_times in self.report_stat:
@@ -61,6 +62,7 @@ class ProcessingEventHour(ProcessingEvent):
 
     def pooling_of_data(self, times_data):
         like_times = f'{times_data[0]}-{times_data[1]:02d}-{times_data[2]:02d} {times_data[3]:02d}'
+        # TODO Видно, что эти условия повторяются для каждого наследника. То есть можно это вынести в базовый класс
         if like_times in self.report_stat:
             self.report_stat[like_times] += 1
         else:
@@ -94,6 +96,7 @@ if __name__ == '__main__':
                               'Если Вы желаете сгруппировать за каждый час события из Лог-файла нажмите 2\n'
                               'Если Вы желаете сгруппировать по месяцам события из Лог-файла нажмите 3\n'
                               'Если Вы желаете сгруппировать по годам события из Лог-файла нажмите 4\n'))
+        # TODO Тоже составим словарик, чтобы опрятнее код был
         if flag_char == 1:
             static_class = ProcessingEvent
             print('Вы выбрали группировку данных за каждую минуту')
