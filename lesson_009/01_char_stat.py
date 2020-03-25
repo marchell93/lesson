@@ -52,11 +52,8 @@ class StatisticChar:
                 else:
                     self.work_stat[char] = 1
 
-    # TODO В базовом классе этот метод стоит оставить пустым (просто pass внутри), а это конкретное определение тоже
-    #  в неследнике сделать
     def sorting_method(self):
-        sorted_stat = sorted(self.work_stat.items(), key=lambda pair: pair[1], reverse=True)
-        self.report_stat = dict(sorted_stat)
+        pass
 
     def write_on_console(self):
         count = 0
@@ -74,6 +71,13 @@ class StatisticChar:
         count_line = f'|{format_chars[4]:^10}|{str(count):^10}|'
         print(count_line)
         print(head_line)
+
+
+class StatisticCharFreqDecrease(StatisticChar):
+
+    def sorting_method(self):
+        sorted_stat = sorted(self.work_stat.items(), key=lambda pair: pair[1], reverse=True)
+        self.report_stat = dict(sorted_stat)
 
 
 class StatisticCharFreqIncrease(StatisticChar):
@@ -98,36 +102,30 @@ class StatisticCharAlpDecrease(StatisticChar):
 
 
 if __name__ == '__main__':
-    # TODO Разделители лучше не вручную писать, а составлять путь через os.path.joint() - так разделители
-    #   будут сформированы в зависимости от ОС
-    input_path = os.path.normpath(f'{os.path.curdir}/python_snippets/voyna-i-mir.txt.zip')
-    static_class = None
-    while static_class is None:
+    input_path = os.path.join(f'{os.path.curdir}', f'python_snippets\\voyna-i-mir.txt.zip')
+    choice_class = {
+        1: {'static_class': StatisticCharFreqDecrease, 'title': 'Вы выбрали сортировку по частоте по убыванию'},
+        2: {'static_class': StatisticCharFreqIncrease, 'title': 'Вы выбрали сортировку по частоте по возрастанию'},
+        3: {'static_class': StatisticCharAlpIncrease, 'title': 'Вы выбрали сортировку по алфавиту по возрастанию'},
+        4: {'static_class': StatisticCharAlpDecrease, 'title': 'Вы выбрали сортировку по алфавиту по убыванию'},
+    }
+    while True:
         flag_char = int(input('Если Вы желаете упорядочить буквенные символы произведения Войны и мир по частоте по '
                               'убыванию нажмите 1\nЕсли Вы желаете упорядочить буквенные символы произведения Войны и '
                               'мир по частоте по возрастанию нажмите 2\nЕсли Вы желаете упорядочить буквенные символы '
                               'произведения Войны и мир по алфавиту по возрастанию нажмите 3\nЕсли Вы желаете '
                               'упорядочить буквенные символы произведения Войны и мир по алфавиту по убыванию нажмите '
                               '4\n'))
-        # TODO Лучше сделать словарик по типу, как в 4 модуле мы делали
-        if flag_char == 1:
-            static_class = StatisticChar
-            print('Вы выбрали сортировку по частоте по убыванию')
-        elif flag_char == 2:
-            static_class = StatisticCharFreqIncrease
-            print('Вы выбрали сортировку по частоте по возрастанию')
-        elif flag_char == 3:
-            static_class = StatisticCharAlpIncrease
-            print('Вы выбрали сортировку по алфавиту по возрастанию')
-        elif flag_char == 4:
-            static_class = StatisticCharAlpDecrease
-            print('Вы выбрали сортировку по алфавиту по убыванию')
+
+        if flag_char in choice_class:
+            print(choice_class[flag_char]['title'])
+            stat = choice_class[flag_char]['static_class'](input_path)
+            stat.collect()
+            stat.sorting_method()
+            stat.write_on_console()
+            break
         else:
             print(f'Вы ввели неверное число "{flag_char}", попробуйте еще раз!!!')
-    stat = static_class(input_path)
-    stat.collect()
-    stat.sorting_method()
-    stat.write_on_console()
 
 
 # После выполнения первого этапа нужно сделать упорядочивание статистики

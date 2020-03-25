@@ -27,6 +27,7 @@ class ProcessingEvent:
         self.input_filename = input_filename
         self.output_filename = output_filename
         self.report_stat = {}
+        self.like_times = None
 
     def collect(self, event_name):
         print(f'Производится подсчет событий {event_name}\n')
@@ -42,13 +43,11 @@ class ProcessingEvent:
         times_data = time.strptime(line, '%Y-%m-%d %H:%M:%S')
         self.pooling_of_data(times_data=times_data)
 
-    # TODO Аналогично здесь, как в 01 я написал
     def pooling_of_data(self, times_data):
-        like_times = f'{times_data[0]}-{times_data[1]:02d}-{times_data[2]:02d} {times_data[3]:02d}:{times_data[4]:02d}'
-        if like_times in self.report_stat:
-            self.report_stat[like_times] += 1
+        if self.like_times in self.report_stat:
+            self.report_stat[self.like_times] += 1
         else:
-            self.report_stat[like_times] = 1
+            self.report_stat[self.like_times] = 1
 
     def write_to_file(self):
         with open(self.output_filename, 'a', encoding='utf-8') as file:
@@ -58,65 +57,59 @@ class ProcessingEvent:
                 print(line)
 
 
+class ProcessingEventMinute(ProcessingEvent):
+
+    def pooling_of_data(self, times_data):
+        self.like_times = f'{times_data[0]}-{times_data[1]:02d}-{times_data[2]:02d} {times_data[3]:02d}:{times_data[4]:02d}'
+        super().pooling_of_data(times_data)
+
+
 class ProcessingEventHour(ProcessingEvent):
 
     def pooling_of_data(self, times_data):
-        like_times = f'{times_data[0]}-{times_data[1]:02d}-{times_data[2]:02d} {times_data[3]:02d}'
-        # TODO Видно, что эти условия повторяются для каждого наследника. То есть можно это вынести в базовый класс
-        if like_times in self.report_stat:
-            self.report_stat[like_times] += 1
-        else:
-            self.report_stat[like_times] = 1
+        self.like_times = f'{times_data[0]}-{times_data[1]:02d}-{times_data[2]:02d} {times_data[3]:02d}'
+        super().pooling_of_data(times_data)
 
 
 class ProcessingEventMonth(ProcessingEvent):
 
     def pooling_of_data(self, times_data):
-        like_times = f'{times_data[0]}-{times_data[1]:02d}'
-        if like_times in self.report_stat:
-            self.report_stat[like_times] += 1
-        else:
-            self.report_stat[like_times] = 1
+        self.like_times = f'{times_data[0]}-{times_data[1]:02d}'
+        super().pooling_of_data(times_data)
 
 
 class ProcessingEventYear(ProcessingEvent):
 
     def pooling_of_data(self, times_data):
-        like_times = f'{times_data[0]}'
-        if like_times in self.report_stat:
-            self.report_stat[like_times] += 1
-        else:
-            self.report_stat[like_times] = 1
+        self.like_times = f'{times_data[0]}'
+        super().pooling_of_data(times_data)
 
 
 if __name__ == '__main__':
-    static_class = None
-    while static_class is None:
+    choice_class = {
+        1: {'static_class': ProcessingEventMinute, 'title': 'Вы выбрали группировку данных за каждую минуту'},
+        2: {'static_class': ProcessingEventHour, 'title': 'Вы выбрали группировку данных за каждый час'},
+        3: {'static_class': ProcessingEventMonth, 'title': 'Вы выбрали группировку данных по месяцам'},
+        4: {'static_class': ProcessingEventYear, 'title': 'Вы выбрали группировку данных по годам'},
+    }
+    while True:
         flag_char = int(input('Если Вы желаете сгруппировать за каждую минуту события из Лог-файла нажмите 1\n'
                               'Если Вы желаете сгруппировать за каждый час события из Лог-файла нажмите 2\n'
                               'Если Вы желаете сгруппировать по месяцам события из Лог-файла нажмите 3\n'
                               'Если Вы желаете сгруппировать по годам события из Лог-файла нажмите 4\n'))
-        # TODO Тоже составим словарик, чтобы опрятнее код был
-        if flag_char == 1:
-            static_class = ProcessingEvent
-            print('Вы выбрали группировку данных за каждую минуту')
-        elif flag_char == 2:
-            static_class = ProcessingEventHour
-            print('Вы выбрали группировку данных за каждый час')
-        elif flag_char == 3:
-            static_class = ProcessingEventMonth
-            print('Вы выбрали группировку данных по месяцам')
-        elif flag_char == 4:
-            static_class = ProcessingEventYear
-            print('Вы выбрали группировку данных по годам')
+        if flag_char in choice_class:
+            print(choice_class[flag_char]['title'])
+            stat = choice_class[flag_char]['static_class']('events.txt', 'new_events.txt')
+            # Есть ньюанс при указании event_name...происходит совпадение последовательности букв в Лог-файле при
+            # описании событий, таким образом, для более точного идентифицирования события перед командой " OK", в
+            # аргументе event_name, я ставлю пробел, чтобы статистика событий с данной командой не попадала в
+            # статистику события "NOK"
+            stat.collect('NOK')
+            stat.write_to_file()
+            break
         else:
             print(f'Вы ввели неверное число "{flag_char}", попробуйте еще раз!!!')
-    stat = static_class('events.txt', 'new_events.txt')
-    # Есть ньюанс при указании event_name...происходит совпадение последовательности букв в Лог-файле при описании
-    # событий, таким образом, для более точного идентифицирования события перед командой " OK", в аргументе event_name,
-    # я ставлю пробел, чтобы статистика событий с данной командой не попадала в статистику события "NOK"
-    stat.collect('NOK')
-    stat.write_to_file()
+
 
 # После выполнения первого этапа нужно сделать группировку событий
 #  - по часам
