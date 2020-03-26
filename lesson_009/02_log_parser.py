@@ -60,7 +60,9 @@ class ProcessingEvent:
 class ProcessingEventMinute(ProcessingEvent):
 
     def pooling_of_data(self, times_data):
-        self.like_times = f'{times_data[0]}-{times_data[1]:02d}-{times_data[2]:02d} {times_data[3]:02d}:{times_data[4]:02d}'
+        #  Не забываем про PEP 8
+        self.like_times = (f'{times_data[0]}-{times_data[1]:02d}-{times_data[2]:02d} ' +
+                           f'{times_data[3]:02d}:{times_data[4]:02d}')
         super().pooling_of_data(times_data)
 
 
@@ -104,6 +106,7 @@ if __name__ == '__main__':
             # описании событий, таким образом, для более точного идентифицирования события перед командой " OK", в
             # аргументе event_name, я ставлю пробел, чтобы статистика событий с данной командой не попадала в
             # статистику события "NOK"
+            #  Да, можно и так
             stat.collect('NOK')
             stat.write_to_file()
             break
@@ -116,3 +119,5 @@ if __name__ == '__main__':
 #  - по месяцу
 #  - по году
 # Для этого пригодится шаблон проектирование "Шаблонный метод" см https://goo.gl/Vz4828
+
+# зачет!
