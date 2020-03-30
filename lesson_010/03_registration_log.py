@@ -22,4 +22,25 @@
 # - поле возраст НЕ является числом от 10 до 99: ValueError
 # Вызов метода обернуть в try-except.
 
-# TODO здесь ваш код
+
+def write_log_file(line, name_file):
+    with open(name_file, mode='a', encoding='utf-8') as file:
+        file.write(line)
+
+
+with open('registrations.txt', mode='r', encoding='utf-8') as input_file:
+    for i, line in enumerate(input_file):
+        try:
+            name, email, age = line.split(' ')
+            print(f'Имя: {name}, емаил: {email}, возраст: {age}')
+        except ValueError as exc:
+            yui = exc.args[0]
+            if 'got 0' in exc.args[0]:
+                line_conf = f'Не могу обработать пустую строку № {i}, {exc} в строке {line}\n'
+                print(line_conf)
+                write_log_file('registrations_bad.log', line_conf)
+            else:
+                line_conf = f'Не могу обработать строку № {i}, {exc} в строке {line}\n'
+                print(line_conf)
+                write_log_file('registrations_bad.log', line_conf)
+                # print(exc)
