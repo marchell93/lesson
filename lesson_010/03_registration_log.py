@@ -23,24 +23,71 @@
 # Вызов метода обернуть в try-except.
 
 
-def write_log_file(line, name_file):
-    with open(name_file, mode='a', encoding='utf-8') as file:
-        file.write(line)
+class NotNameError(Exception):
+
+    def __init__(self, message, input_data=None):
+        self.message = message
+        self.input_data = input_data
+
+    def __str__(self):
+        return f'("{self.message}", "{self.input_data}")'
 
 
-with open('registrations.txt', mode='r', encoding='utf-8') as input_file:
-    for i, line in enumerate(input_file):
-        try:
-            name, email, age = line.split(' ')
-            print(f'Имя: {name}, емаил: {email}, возраст: {age}')
-        except ValueError as exc:
-            yui = exc.args[0]
-            if 'got 0' in exc.args[0]:
-                line_conf = f'Не могу обработать пустую строку № {i}, {exc} в строке {line}\n'
-                print(line_conf)
-                write_log_file('registrations_bad.log', line_conf)
+class NotEmailError(Exception):
+
+    def __init__(self, message, input_data=None):
+        self.message = message
+        self.input_data = input_data
+
+    def __str__(self):
+        return f'("{self.message}", "{self.input_data}")'
+
+
+class ControlValidationLine:
+
+    def __init__(self, input_line):
+        self.input_line = input_line
+
+    def validation_line(self):
+        count_arguments = self.input_line.split(' ')
+        if len(count_arguments) == 3:
+            name, email, age = count_arguments
+            if age.isdigit():
+                age = int(age)
             else:
-                line_conf = f'Не могу обработать строку № {i}, {exc} в строке {line}\n'
-                print(line_conf)
-                write_log_file('registrations_bad.log', line_conf)
-                # print(exc)
+                raise ValueError('Пользователь ввел данные в случайном порядке', self.input_line)
+        else:
+            raise ValueError('В строке нехватает элементов', self.input_line)
+        if not name.isalpha():
+            raise NotNameError('Поле имени содержит НЕ только буквы', input_data=self.input_line)
+        elif '@' not in email or '.' not in email:
+            raise NotEmailError('Поле емейл НЕ содержит @ или .(точку)', input_data=self.input_line)
+        elif age < 10 or age > 99:
+            raise ValueError('Поле возраст НЕ является числом от 10 до 99', self.input_line)
+
+
+def write_to_log(line, output_file_name):
+    with open(output_file_name, mode='a', encoding='utf-8') as output_file:
+        output_file.write(line+'\n')
+
+
+def condition_except(exc, count_line, output_file_name):
+    excepts = f'Поймано моё исключение {exc} в строке {count_line}'
+    print(excepts)
+    write_to_log(excepts, output_file_name)
+
+
+if __name__ == '__main__':
+    with open('registrations.txt', mode='r', encoding='utf-8') as input_file:
+        for i, line in enumerate(input_file):
+            line = line[:-1]
+            validation_line = ControlValidationLine(line)
+            try:
+                validation_line.validation_line()
+                write_to_log(line, 'registrations_good.log')
+            except ValueError as exc:
+                condition_except(exc, i, 'registrations_bad.log')
+            except NotNameError as exc_nne:
+                condition_except(exc_nne, i, 'registrations_bad.log')
+            except NotEmailError as exc_nee:
+                condition_except(exc_nee, i, 'registrations_bad.log')
