@@ -23,15 +23,18 @@ from termcolor import cprint
 ENLIGHTENMENT_CARMA_LEVEL = 777
 
 
+# TODO Вот этот класс унаследуем от Exception
 class StrMainClass:
 
     def __init__(self):
+        # TODO И не забудем при этом конструктор родительского класса
         self.message = None
 
     def __str__(self):
         return self.message
 
 
+# TODO А эти только от StrMainClass, не нужно множественного наследования.
 class IamGoodError(StrMainClass, Exception):
 
     def __init__(self):
@@ -88,6 +91,9 @@ if __name__ == '__main__':
         try:
             day += 1
             cprint(f'================== День {day} ==================', color='red')
+            # TODO Исключения нужно формировать и выбрасывать в самой one_day,
+            #   а здесь мы пытаемся вызвать one_day() и получить из нее карму
+            #   и ловим ошибки типа StrMainClass
             probability = randint(1, 13)
             if probability == 3:
                 choice_exception = choice(exceptions)

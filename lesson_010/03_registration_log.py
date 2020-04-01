@@ -26,6 +26,8 @@
 class NotNameError(Exception):
 
     def __init__(self, message, input_data=None):
+        # TODO Не забываем про конструктор родительского класса.
+        #   В остальном все отлично!
         self.message = message
         self.input_data = input_data
 
