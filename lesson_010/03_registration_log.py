@@ -26,8 +26,7 @@
 class NotNameError(Exception):
 
     def __init__(self, message, input_data=None):
-        # TODO Не забываем про конструктор родительского класса.
-        #   В остальном все отлично!
+        super().__init__(message, input_data)
         self.message = message
         self.input_data = input_data
 
@@ -38,6 +37,7 @@ class NotNameError(Exception):
 class NotEmailError(Exception):
 
     def __init__(self, message, input_data=None):
+        super().__init__(message, input_data)
         self.message = message
         self.input_data = input_data
 
