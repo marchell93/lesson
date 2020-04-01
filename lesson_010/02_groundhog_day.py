@@ -23,85 +23,85 @@ from termcolor import cprint
 ENLIGHTENMENT_CARMA_LEVEL = 777
 
 
-# TODO Вот этот класс унаследуем от Exception
-class StrMainClass:
+class StrMainClass(Exception):
 
     def __init__(self):
-        # TODO И не забудем при этом конструктор родительского класса
+        super().__init__()
         self.message = None
 
     def __str__(self):
         return self.message
 
 
-# TODO А эти только от StrMainClass, не нужно множественного наследования.
-class IamGoodError(StrMainClass, Exception):
+class IamGoodError(StrMainClass):
 
     def __init__(self):
+        super().__init__()
         self.message = 'Режим Бога включен!!!'
 
 
-class DrunkError(StrMainClass, Exception):
+class DrunkError(StrMainClass):
 
     def __init__(self):
+        super().__init__()
         self.message = 'Объект напился!!!'
 
 
-class CarCrashError(StrMainClass, Exception):
+class CarCrashError(StrMainClass):
 
     def __init__(self):
+        super().__init__()
         self.message = 'Объект разбился на машине!!!'
 
 
-class GluttonyError(StrMainClass, Exception):
+class GluttonyError(StrMainClass):
 
     def __init__(self):
+        super().__init__()
         self.message = 'Объект обожрался!!!'
 
 
-class DepressionError(StrMainClass, Exception):
+class DepressionError(StrMainClass):
 
     def __init__(self):
+        super().__init__()
         self.message = 'Объект в депресии!!!'
 
 
-class SuicideError(StrMainClass, Exception):
+class SuicideError(StrMainClass):
 
     def __init__(self):
+        super().__init__()
         self.message = 'Объект покончил жизнь самоубийством!!!'
 
 
 def one_day(finish_carma):
+    exceptions = [IamGoodError, DrunkError, CarCrashError, GluttonyError, DepressionError, SuicideError]
     carma = randint(1, 7)
-    finish_carma += carma
+    probability = randint(1, 13)
+    if probability == 3:
+        choice_exception = choice(exceptions)
+        raise choice_exception
+    else:
+        finish_carma += carma
     return finish_carma
 
 
-def write_to_log(line):
+def write_to_log(line_exception):
     with open('log_exceptions.txt', mode='a', encoding='utf-8') as file:
-        file.write(line)
+        file.write(line_exception)
 
 
 if __name__ == '__main__':
     day = 0
     full_carma = 0
-    choice_exception = None
-    exceptions = [IamGoodError, DrunkError, CarCrashError, GluttonyError, DepressionError, SuicideError]
     while full_carma < ENLIGHTENMENT_CARMA_LEVEL:
         try:
             day += 1
             cprint(f'================== День {day} ==================', color='red')
-            # TODO Исключения нужно формировать и выбрасывать в самой one_day,
-            #   а здесь мы пытаемся вызвать one_day() и получить из нее карму
-            #   и ловим ошибки типа StrMainClass
-            probability = randint(1, 13)
-            if probability == 3:
-                choice_exception = choice(exceptions)
-                raise choice_exception
-            else:
-                full_carma = one_day(full_carma)
-                cprint(f'Карма объекта: {full_carma} ед.', color='green')
-        except choice_exception as exc:
+            full_carma = one_day(full_carma)
+            cprint(f'Карма объекта: {full_carma} ед.', color='green')
+        except StrMainClass as exc:
             line = f'Поймано исключение {exc} на {day} дне!!!\n'
             write_to_log(line)
             print(line)
