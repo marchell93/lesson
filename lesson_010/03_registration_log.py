@@ -93,3 +93,5 @@ if __name__ == '__main__':
                 condition_except(exc_nne, i, 'registrations_bad.log')
             except NotEmailError as exc_nee:
                 condition_except(exc_nee, i, 'registrations_bad.log')
+
+# зачет!
