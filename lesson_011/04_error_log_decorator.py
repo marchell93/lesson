@@ -8,18 +8,27 @@
 # Лог файл открывать каждый раз при ошибке в режиме 'a'
 
 
-def log_errors(func):
-    pass
-    # TODO здесь ваш код
+def get_log_errors(output_filename):
+    def log_errors(func):
+        def surrogate(*args, **kwargs):
+            with open(output_filename, mode='a', encoding='utf-8') as output_file:
+                try:
+                    func(*args, **kwargs)
+                except Exception as exc:
+                    line_exc = f'Сработало исключение в функции: "{func.__name__}", ' \
+                        f'с параметрами вызова: {exc.args}, тип ошибки: {type(exc)}, текст ошибки: "{exc}"'
+                    output_file.write(line_exc + '\n')
+        return surrogate
+    return log_errors
 
 
 # Проверить работу на следующих функциях
-@log_errors
+@get_log_errors('function_errors_perky.log')
 def perky(param):
     return param / 0
 
 
-@log_errors
+@get_log_errors('function_errors_check.log')
 def check_line(line):
     name, email, age = line.split(' ')
     if not name.isalpha():
@@ -52,4 +61,3 @@ perky(param=42)
 # @log_errors('function_errors.log')
 # def func():
 #     pass
-
