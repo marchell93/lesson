@@ -35,6 +35,7 @@ def main_events_collect(event_name, input_filename):
                 if like_times in store_like_times:
                     count += 1
                 else:
+                    # TODO Добавим еще условие, чтобы в начале строка "[] 1"  не выводилась
                     yield store_like_times, count
                     store_like_times = like_times
                     count = 1

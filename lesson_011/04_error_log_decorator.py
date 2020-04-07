@@ -18,6 +18,8 @@ def get_log_errors(output_filename):
                     line_exc = f'Сработало исключение в функции: "{func.__name__}", ' \
                         f'с параметрами вызова: {exc.args}, тип ошибки: {type(exc)}, текст ошибки: "{exc}"'
                     output_file.write(line_exc + '\n')
+                # TODO После обработки ошибки нам ее нужно пробросить дальше. То есть здесь мы только логируем
+                #   ошибку, но не замалчиваем ее
         return surrogate
     return log_errors
 

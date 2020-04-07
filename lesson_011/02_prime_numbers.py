@@ -51,6 +51,7 @@ prime_number_iterator = PrimeNumbers(n=10000)
 for number in prime_number_iterator:
     print(number)
 
+# TODO Отлично, можно делать остальные задания
 
 # TODO после подтверждения части 1 преподователем, можно делать
 # Часть 2
