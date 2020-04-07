@@ -47,25 +47,73 @@ class PrimeNumbers:
         return True
 
 
-prime_number_iterator = PrimeNumbers(n=10000)
-for number in prime_number_iterator:
-    print(number)
+# prime_number_iterator = PrimeNumbers(n=10000)
+# for number in prime_number_iterator:
+#     print(number)
 
-# TODO Отлично, можно делать остальные задания
-
-# TODO после подтверждения части 1 преподователем, можно делать
 # Часть 2
 # Теперь нужно создать генератор, который выдает последовательность простых чисел до n
 # Распечатать все простые числа до 10000 в столбик
 
 
 def prime_numbers_generator(n):
-    pass
-    # TODO здесь ваш код
+    prime_numbers = []
+    for number in range(2, n + 1):
+        for prime in prime_numbers:
+            if number % prime == 0:
+                break
+        else:
+            yield number
+            prime_numbers.append(number)
 
 
-# for number in prime_numbers_generator(n=10000):
-#     print(number)
+def main_filter_function(prime_number):
+    prime_number = str(prime_number)
+    count_prime_number = len(prime_number)
+    if len(prime_number) >= 2:
+        count_number = int(count_prime_number / 2)
+        odd_char = 0 if len(prime_number) % 2 == 0 else 1
+        ln = lucky_number(prime_number, count_prime_number, count_number, odd_char)
+        p = palindrome(prime_number)
+        t = trimorphic(prime_number, count_prime_number)
+        print(f'Простое число: {prime_number} - {ln}, {p}, {t}')
+
+
+def lucky_number(prime_number, count_prime_number, count_number, odd_char):
+    first_syllable = prime_number[:count_prime_number - count_number - odd_char]
+    last_syllable = prime_number[count_prime_number - count_number:]
+    first_syllable = sum([int(x) for x in first_syllable])
+    last_syllable = sum([int(y) for y in last_syllable])
+    if first_syllable == last_syllable:
+        return f'Счастливое'
+    else:
+        return f'Не счастливое'
+
+
+def palindrome(prime_number):
+    palindrome_number = prime_number[::-1]
+    if int(prime_number) == int(palindrome_number):
+        return f'Палиндромное'
+    else:
+        return f'Не палиндромное'
+
+
+def trimorphic(prime_number, count_prime_number):
+    """
+    Триморфное число — натуральное число, десятичная запись куба которого оканчивается цифрами самого этого числа.
+    https://ru.wikipedia.org/wiki/Триморфное_число
+    """
+    prime_number = int(prime_number)
+    trimorphic_number = str(prime_number ** 3)
+    trim_num_syllable = int(trimorphic_number[-count_prime_number:])
+    if prime_number == trim_num_syllable:
+        return f'Триморфное'
+    else:
+        return f'Не триморфное'
+
+
+for number in prime_numbers_generator(n=10000):
+    main_filter_function(number)
 
 
 # Часть 3

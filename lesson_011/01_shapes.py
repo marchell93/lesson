@@ -28,8 +28,8 @@ def get_polygon(n):
     return shape
 
 
-draw_triangle = get_polygon(n=5)  # TODO С пятью углами уже не треугольник получаеся)
-draw_triangle(point=sd.get_point(200, 200), angle=13, length=100)
+draw_shapes = get_polygon(n=5)
+draw_shapes(point=sd.get_point(200, 200), angle=13, length=100)
 
 
 sd.pause()
