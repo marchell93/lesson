@@ -46,3 +46,5 @@ def main_events_collect(event_name, input_filename):
 grouped_events = main_events_collect(event, input_file)
 for group_time, event_count in grouped_events:
     print(f'[{group_time}] {event_count}')
+
+# зачет!

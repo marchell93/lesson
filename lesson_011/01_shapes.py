@@ -33,3 +33,5 @@ draw_shapes(point=sd.get_point(200, 200), angle=13, length=100)
 
 
 sd.pause()
+
+# зачет!
