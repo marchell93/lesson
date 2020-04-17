@@ -109,22 +109,24 @@ class Volatility:
         else:
             self.total_volatility[self.filename.strip('.csv')] = volatility
 
-    def print_null_volatility(self):
-        konv_to_str = ', '.join(self.null_volatility)
-        print(f'Нулевая волатильность:\n{konv_to_str}')
 
-    def print_total_volatility(self):
-        count = 0
-        len_tot_vol = len(self.total_volatility)
-        print(f'Максимальная волатильность:')
-        for key, value in self.total_volatility.items():
-            count += 1
-            if 3 >= count >= 1:
-                print(f'{key} - {round(value, 3)} %')
-            elif count == 4:
-                print(f'Минимальная волатильность:')
-            elif len_tot_vol - 3 <= count <= len_tot_vol - 1:
-                print(f'{key} - {round(value, 3)} %')
+def print_null_volatility(null_volatility):
+    konv_to_str = ', '.join(null_volatility)
+    print(f'Нулевая волатильность:\n{konv_to_str}')
+
+
+def print_total_volatility(total_volatility):
+    count = 0
+    len_tot_vol = len(total_volatility)
+    print(f'Максимальная волатильность:')
+    for key, value in total_volatility.items():
+        count += 1
+        if 3 >= count >= 1:
+            print(f'{key} - {round(value, 3)} %')
+        elif count == 4:
+            print(f'Минимальная волатильность:')
+        elif len_tot_vol - 2 <= count <= len_tot_vol:
+            print(f'{key} - {round(value, 3)} %')
 
 
 if __name__ == '__main__':
@@ -132,5 +134,5 @@ if __name__ == '__main__':
         volatilitys = [Volatility(dir, filename) for filename in filenames]
         for vol in volatilitys:
             vol.run()
-        vol.print_total_volatility()
-        vol.print_null_volatility()
+        print_total_volatility(Volatility.total_volatility)
+        print_null_volatility(Volatility.null_volatility)
