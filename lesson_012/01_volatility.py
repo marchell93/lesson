@@ -75,12 +75,13 @@
 import os
 
 
-class Volatility:
+class Volatility:  # TODO  не стоит тет смешивать логику. Volatility должен
+    # отвечать только за обработку одного файла и возвращать из метода run название и волатильность
     total_volatility = {}
     null_volatility = []
 
     def __init__(self, pathfile, filename):
-        self.filepath = os.path.join(pathfile, filename)
+        self.filepath = os.path.join(pathfile, filename)  # TODO это логичнее делать вне
         self.filename = filename
 
     def run(self):
@@ -90,7 +91,8 @@ class Volatility:
     def open_file(self):
         total_price = []
         with open(self.filepath, mode='r', encoding='utf-8') as file:
-            for line in file:
+            for line in file:  # TODO нам не нужно хранить все данные - файл может быть большим.
+                # Нам нужен только мин и макс
                 data_from_file = line[:-1].split(',')
                 try:
                     if float(data_from_file[2]):
@@ -103,7 +105,7 @@ class Volatility:
         max_price = max(total_price)
         min_price = min(total_price)
         average_price = (max_price + min_price) / 2
-        volatility = ((max_price - min_price) / average_price) * 100
+        volatility = ((max_price - min_price) / average_price) * 100  # TODO может быть деление на 0
         if volatility == 0.0:
             self.null_volatility.append(self.filename.strip('.csv'))
         else:
