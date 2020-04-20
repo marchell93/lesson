@@ -75,41 +75,41 @@
 import os
 
 
-class Volatility:  # TODO  не стоит тет смешивать логику. Volatility должен
-    # отвечать только за обработку одного файла и возвращать из метода run название и волатильность
-    total_volatility = {}
-    null_volatility = []
+class Volatility:
 
     def __init__(self, pathfile, filename):
-        self.filepath = os.path.join(pathfile, filename)  # TODO это логичнее делать вне
+        # Спасибо большое за замечание, но мне кажется, что конкретно в данном случае лучше сделать именно так,
+        # потому что, переменную self.filename я далее использую по коду
+        self.filepath = os.path.join(pathfile, filename)
         self.filename = filename
 
     def run(self):
-        self.open_file()
-        Volatility.total_volatility = dict(sorted(self.total_volatility.items(), key=lambda pair: pair[1], reverse=True))
+        volatility = 0.0
+        min_price, max_price = self.open_file()
+        average_price = (max_price + min_price) / 2
+        ticker = self.filename.strip('.csv')
+        if average_price != 0:
+            volatility = ((max_price - min_price) / average_price) * 100
+        return ticker, volatility
 
     def open_file(self):
-        total_price = []
+        max_price = 0.0
+        min_price = 0.0
         with open(self.filepath, mode='r', encoding='utf-8') as file:
-            for line in file:  # TODO нам не нужно хранить все данные - файл может быть большим.
-                # Нам нужен только мин и макс
+            for line in file:
                 data_from_file = line[:-1].split(',')
                 try:
-                    if float(data_from_file[2]):
-                        total_price.append(float(data_from_file[2]))
+                    price = float(data_from_file[2])
+                    if min_price == 0.0 and max_price == 0.0:
+                        min_price = price
+                        max_price = price
+                    if price > max_price:
+                        max_price = price
+                    if price < min_price:
+                        min_price = price
                 except ValueError:
                     print(f'Первая строка файла - заголовок... читаем дальше')
-            self.calculation_volatility(total_price)
-
-    def calculation_volatility(self, total_price):
-        max_price = max(total_price)
-        min_price = min(total_price)
-        average_price = (max_price + min_price) / 2
-        volatility = ((max_price - min_price) / average_price) * 100  # TODO может быть деление на 0
-        if volatility == 0.0:
-            self.null_volatility.append(self.filename.strip('.csv'))
-        else:
-            self.total_volatility[self.filename.strip('.csv')] = volatility
+        return min_price, max_price
 
 
 def print_null_volatility(null_volatility):
@@ -131,10 +131,18 @@ def print_total_volatility(total_volatility):
             print(f'{key} - {round(value, 3)} %')
 
 
+global_total_volatility = {}
+global_null_volatility = []
+
 if __name__ == '__main__':
     for dir, subdir, filenames in os.walk('trades'):
         volatilitys = [Volatility(dir, filename) for filename in filenames]
         for vol in volatilitys:
-            vol.run()
-        print_total_volatility(Volatility.total_volatility)
-        print_null_volatility(Volatility.null_volatility)
+            ticker, volatility = vol.run()
+            if volatility == 0.0:
+                global_null_volatility.append(ticker)
+            else:
+                global_total_volatility[ticker] = volatility
+    global_total_volatility = dict(sorted(global_total_volatility.items(), key=lambda pair: pair[1], reverse=True))
+    print_total_volatility(global_total_volatility)
+    print_null_volatility(global_null_volatility)
