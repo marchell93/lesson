@@ -84,28 +84,27 @@ class Volatility:
         self.filename = filename
 
     def run(self):
+        ticker = self.filename.strip('.csv')
+
         volatility = 0.0
         min_price, max_price = self.open_file()
-        average_price = (max_price + min_price) / 2
-        ticker = self.filename.strip('.csv')
-        if average_price != 0:
+        if max_price and min_price:
+            average_price = (max_price + min_price) / 2
             volatility = ((max_price - min_price) / average_price) * 100
+
         return ticker, volatility
 
     def open_file(self):
-        max_price = 0.0
-        min_price = 0.0
+        max_price = None
+        min_price = None
         with open(self.filepath, mode='r', encoding='utf-8') as file:
             for line in file:
                 data_from_file = line[:-1].split(',')
                 try:
                     price = float(data_from_file[2])
-                    if min_price == 0.0 and max_price == 0.0:
-                        min_price = price
+                    if not max_price or price > max_price:
                         max_price = price
-                    if price > max_price:
-                        max_price = price
-                    if price < min_price:
+                    if not min_price or price < min_price:
                         min_price = price
                 except ValueError:
                     print(f'Первая строка файла - заголовок... читаем дальше')
@@ -135,7 +134,7 @@ global_total_volatility = {}
 global_null_volatility = []
 
 if __name__ == '__main__':
-    for dir, subdir, filenames in os.walk('trades'):
+    for dir, subdir, filenames in os.walk(r'trades'):
         volatilitys = [Volatility(dir, filename) for filename in filenames]
         for vol in volatilitys:
             ticker, volatility = vol.run()
