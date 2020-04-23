@@ -145,3 +145,4 @@ if __name__ == '__main__':
     global_total_volatility = dict(sorted(global_total_volatility.items(), key=lambda pair: pair[1], reverse=True))
     print_total_volatility(global_total_volatility)
     print_null_volatility(global_null_volatility)
+# зачет!
