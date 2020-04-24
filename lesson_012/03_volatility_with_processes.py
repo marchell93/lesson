@@ -82,7 +82,7 @@ global_null_volatility = []
 
 if __name__ == '__main__':
     volatilitys, pipes = [], []
-    for dir, subdir, filenames in os.walk('trades'):
+    for dir, subdir, filenames in os.walk(r'trades'):
         for filename in filenames:
             parent_conn, child_conn = Pipe()
             volatility = Volatility(pathfile=dir, filename=filename, conn=child_conn)
@@ -102,3 +102,4 @@ if __name__ == '__main__':
         global_total_volatility = dict(sorted(global_total_volatility.items(), key=lambda pair: pair[1], reverse=True))
         print_total_volatility(global_total_volatility)
         print_null_volatility(global_null_volatility)
+# зачет!
