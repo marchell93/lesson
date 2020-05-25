@@ -32,7 +32,21 @@
 # Скрипт должен принимать параметр --result и печатать на консоль:
 #   Количество очков для результатов ХХХ - УУУ.
 
-# TODO тут ваш код
+import argparse
+from bowling import Bowling, StateBowling
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--result', type=str, help='Введите результат игры в боулинг', required=True)
+    args = parser.parse_args()
+    try:
+        state = StateBowling()
+        gaming_bowling = Bowling(state)
+        gaming_bowling.get_scope(args.result)
+        print(f'Количество очков для результатов {args.result} - {state.result}')
+    except Exception as exc:
+        print(exc)
+
 
 # При написании кода помнить, что заказчик может захотеть доработок и новых возможностей...
 # И, возможно, вам пригодится паттерн проектирования "Состояние",
