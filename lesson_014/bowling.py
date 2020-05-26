@@ -12,8 +12,8 @@ class Bowling:
             self.i += 1
 
     def determination_state(self, game_result):
-        frame = game_result[self.i] + game_result[self.i + 1]
         self.frame_count += 1
+        frame = game_result[self.i] + game_result[self.i + 1] if game_result[self.i] != 'X' else ''
         if game_result[self.i] == 'X':
             self.state.strike()
         elif '/' in frame:
