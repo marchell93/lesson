@@ -28,6 +28,8 @@ class MyBowlingTestCase(unittest.TestCase):
         gaming_bowling.get_scope('41')
         self.assertEqual(state.result, 5)
 
+    # TODO Тут ещё нужны будут проверки на ошибки поможет self.assertRaises
+
 
 if __name__ == '__main__':
     unittest.main()

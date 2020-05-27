@@ -42,11 +42,13 @@ class State:
         pass
 
 
-class StateBowling(State):
+class StateBowling(State):  # TODO Обычно за состояние выбирают бросок (первый/второй)
+    # TODO Тогда можно по-очереди вызывать объекты двух классов и чередовать их для расчёта
+    # TODO Так в одном классе страйк вызывает ошибку (второй бросок) а в другом +20 очков (первый бросок)
 
     def __init__(self):
         super().__init__()
-        self.result = 0
+        self.result = 0  # TODO Подсчёт при этом производить надо в том классе, который будет управлять бросками
 
     def strike(self):
         self.result += 20
@@ -56,3 +58,24 @@ class StateBowling(State):
 
     def count(self, summa):
         self.result += summa
+
+
+state = StateBowling()
+gaming_bowling = Bowling(state)
+gaming_bowling.get_scope('XXXXXXXXXXX')  # TODO Нужно считать фреймы и если их больше 10 (или меньше) - вызывать ошибку
+print(state.result)
+
+state = StateBowling()
+gaming_bowling = Bowling(state)
+gaming_bowling.get_scope('XXXXXXXXX00')  # TODO 0 в результатах тоже должен вызывать ошибку
+print(state.result)
+
+state = StateBowling()
+gaming_bowling = Bowling(state)
+gaming_bowling.get_scope('XXXXXXXXX//')  # TODO / в начале фрейма должен вызывать ошибку
+print(state.result)
+
+state = StateBowling()
+gaming_bowling = Bowling(state)
+gaming_bowling.get_scope('1XXXXXXXXXX')  # TODO Тут тоже должно быть отдельное исключение для страйка на втором броске
+print(state.result)
