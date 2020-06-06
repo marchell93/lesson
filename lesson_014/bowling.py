@@ -21,6 +21,8 @@ class Bowling:
         frame = game_result[self.i] + game_result[self.i + 1] if game_result[self.i] != 'X' else game_result[self.i]
         self.i += 1 if len(frame) == 2 else 0
         self.frame_count += 1
+        # TODO проверку на количество фрэймов лучше тут и оставить
+        # TODO Ещё было бы здорово из этого метода сделать генератор, который выдает по фрейму за обращение
         return frame
 
     def get_scope(self, game_result):
@@ -76,3 +78,9 @@ class SecondShotState(State):
 
     def spare(self):
         return 15
+
+
+gaming_bowling = Bowling()
+gaming_bowling.get_scope('XXXXXXXXX//')  # TODO / в начале фрейма должен вызывать ошибку
+print(gaming_bowling.total_score)
+
