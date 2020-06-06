@@ -83,4 +83,4 @@ class SecondShotState(State):
 gaming_bowling = Bowling()
 gaming_bowling.get_scope('XXXXXXXXX//')  # TODO / в начале фрейма должен вызывать ошибку
 print(gaming_bowling.total_score)
-
+gaming_bowling.get_scope('XXXXXXXXXа/')  # TODO Сейчас перед '/' можно вообще любой символ поставить)
