@@ -1,34 +1,43 @@
 import unittest
-from bowling import Bowling, StateBowling
+from bowling import Bowling
 
 
-class MyBowlingTestCase(unittest.TestCase):
+class MyBowlingTest(unittest.TestCase):
+
+    def setUp(self):
+        self.gaming_bowling = Bowling()
 
     def test_normal(self):
-        state = StateBowling()
-        gaming_bowling = Bowling(state)
-        gaming_bowling.get_scope('X4/71X4--6415/X11')
-        self.assertEqual(state.result, 115)
+        self.gaming_bowling.get_scope('X71-9X7/45-3-65/')
+        self.assertEqual(self.gaming_bowling.total_score, 105)
 
     def test_strike(self):
-        state = StateBowling()
-        gaming_bowling = Bowling(state)
-        gaming_bowling.get_scope('X')
-        self.assertEqual(state.result, 20)
+        self.gaming_bowling.get_scope('X')
+        self.assertEqual(self.gaming_bowling.total_score, 20)
 
     def test_spare(self):
-        state = StateBowling()
-        gaming_bowling = Bowling(state)
-        gaming_bowling.get_scope('4/')
-        self.assertEqual(state.result, 15)
+        self.gaming_bowling.get_scope('4/')
+        self.assertEqual(self.gaming_bowling.total_score, 15)
 
     def test_count(self):
-        state = StateBowling()
-        gaming_bowling = Bowling(state)
-        gaming_bowling.get_scope('41')
-        self.assertEqual(state.result, 5)
+        self.gaming_bowling.get_scope('45')
+        self.assertEqual(self.gaming_bowling.total_score, 9)
 
-    # TODO Тут ещё нужны будут проверки на ошибки поможет self.assertRaises
+    def test_raise_second_shot_strike(self):
+        with self.assertRaises(ValueError):
+            self.gaming_bowling.get_scope('X7XXXXXXXX')
+
+    def test_raise_first_shot_spare(self):
+        with self.assertRaises(ValueError):
+            self.gaming_bowling.get_scope('XXXXX/6XXXX')
+
+    def test_raise_null_in_game_result(self):
+        with self.assertRaises(ValueError):
+            self.gaming_bowling.get_scope('XXXXXXX00XX')
+
+    def test_raise_greater_than_10_frames(self):
+        with self.assertRaises(ValueError):
+            self.gaming_bowling.get_scope('XXXXXXXXXXX')
 
 
 if __name__ == '__main__':

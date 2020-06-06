@@ -1,32 +1,45 @@
-
 class Bowling:
 
-    def __init__(self, state):
-        self.state = state
+    def __init__(self):
+        self.state = None
         self.i = 0
         self.frame_count = 0
+        self.total_score = 0
+
+    def change_state(self, state):
+        self.state = state
+
+    def char_state(self, char):
+        if char == 'X':
+            self.total_score += self.state.strike()
+        elif char == '/':
+            self.total_score += self.state.spare()
+        else:
+            self.total_score += self.state.count(char)
+
+    def split_on_frame(self, game_result):
+        frame = game_result[self.i] + game_result[self.i + 1] if game_result[self.i] != 'X' else game_result[self.i]
+        self.i += 1 if len(frame) == 2 else 0
+        self.frame_count += 1
+        return frame
 
     def get_scope(self, game_result):
         while self.i < len(game_result):
-            self.determination_state(game_result)
-            self.i += 1
-
-    def determination_state(self, game_result):
-        self.frame_count += 1
-        frame = game_result[self.i] + game_result[self.i + 1] if game_result[self.i] != 'X' else ''
-        if game_result[self.i] == 'X':
-            self.state.strike()
-        elif '/' in frame:
-            self.state.spare()
-            self.i += 1
-        else:
-            summa = sum([int(x) for x in frame if x != '-'])
-            if summa >= 10:
-                raise ValueError(f'Ошибка в {self.frame_count} фрэйме. Вы ввели неверные числа...на площадке всего '
-                                 f'10 кегель!!!')
+            frame = self.split_on_frame(game_result)
+            if len(frame) == 1:
+                self.change_state(FirstShotState())
+                self.char_state(frame[0])
+            elif frame[1] == '/' and frame[0] != '0':
+                self.change_state(SecondShotState())
+                self.char_state(frame[1])
             else:
-                self.state.count(summa)
-                self.i += 1
+                self.change_state(FirstShotState())
+                self.char_state(frame[0])
+                self.change_state(SecondShotState())
+                self.char_state(frame[1])
+            self.i += 1
+            if self.frame_count > 10:
+                raise ValueError('Нельзя играть больше 10 фреймов')
 
 
 # Реализация паттерна проектирования "Состояние"
@@ -38,44 +51,28 @@ class State:
     def spare(self):
         pass
 
-    def count(self, summa):
-        pass
+    def count(self, char):
+        if char == '-':
+            return 0
+        if char != '0':
+            return int(char)
+        else:
+            raise ValueError('Не должно быть в строке символа 0, вместо этого пишем -')
 
 
-class StateBowling(State):  # TODO Обычно за состояние выбирают бросок (первый/второй)
-    # TODO Тогда можно по-очереди вызывать объекты двух классов и чередовать их для расчёта
-    # TODO Так в одном классе страйк вызывает ошибку (второй бросок) а в другом +20 очков (первый бросок)
-
-    def __init__(self):
-        super().__init__()
-        self.result = 0  # TODO Подсчёт при этом производить надо в том классе, который будет управлять бросками
+class FirstShotState(State):
 
     def strike(self):
-        self.result += 20
+        return 20
 
     def spare(self):
-        self.result += 15
-
-    def count(self, summa):
-        self.result += summa
+        raise ValueError('В первом броске не может быть спэра')
 
 
-state = StateBowling()
-gaming_bowling = Bowling(state)
-gaming_bowling.get_scope('XXXXXXXXXXX')  # TODO Нужно считать фреймы и если их больше 10 (или меньше) - вызывать ошибку
-print(state.result)
+class SecondShotState(State):
 
-state = StateBowling()
-gaming_bowling = Bowling(state)
-gaming_bowling.get_scope('XXXXXXXXX00')  # TODO 0 в результатах тоже должен вызывать ошибку
-print(state.result)
+    def strike(self):
+        raise ValueError('Во втором броске не может быть страйка')
 
-state = StateBowling()
-gaming_bowling = Bowling(state)
-gaming_bowling.get_scope('XXXXXXXXX//')  # TODO / в начале фрейма должен вызывать ошибку
-print(state.result)
-
-state = StateBowling()
-gaming_bowling = Bowling(state)
-gaming_bowling.get_scope('1XXXXXXXXXX')  # TODO Тут тоже должно быть отдельное исключение для страйка на втором броске
-print(state.result)
+    def spare(self):
+        return 15
