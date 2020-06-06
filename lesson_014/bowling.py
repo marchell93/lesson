@@ -15,33 +15,35 @@ class Bowling:
         elif char == '/':
             self.total_score += self.state.spare()
         else:
-            self.total_score += self.state.count(char)
+            if char.isdigit() or char == '-':
+                self.total_score += self.state.count(char)
+            else:
+                raise ValueError('Вы ввели неверный символ!!!')
 
     def split_on_frame(self, game_result):
         frame = game_result[self.i] + game_result[self.i + 1] if game_result[self.i] != 'X' else game_result[self.i]
-        self.i += 1 if len(frame) == 2 else 0
         self.frame_count += 1
-        # TODO проверку на количество фрэймов лучше тут и оставить
-        # TODO Ещё было бы здорово из этого метода сделать генератор, который выдает по фрейму за обращение
-        return frame
+        if self.frame_count > 10:
+            raise ValueError('Нельзя играть больше 10 фреймов')
+        yield frame
+        self.i += 1 if len(frame) == 2 else 0
 
     def get_scope(self, game_result):
         while self.i < len(game_result):
-            frame = self.split_on_frame(game_result)
-            if len(frame) == 1:
-                self.change_state(FirstShotState())
-                self.char_state(frame[0])
-            elif frame[1] == '/' and frame[0] != '0':
-                self.change_state(SecondShotState())
-                self.char_state(frame[1])
-            else:
-                self.change_state(FirstShotState())
-                self.char_state(frame[0])
-                self.change_state(SecondShotState())
-                self.char_state(frame[1])
-            self.i += 1
-            if self.frame_count > 10:
-                raise ValueError('Нельзя играть больше 10 фреймов')
+            frame_generation = self.split_on_frame(game_result)
+            for frame in frame_generation:
+                if len(frame) == 1:
+                    self.change_state(FirstShotState())
+                    self.char_state(frame[0])
+                elif frame[1] == '/' and frame[0] != '0':
+                    self.change_state(SecondShotState())
+                    self.char_state(frame[1])
+                else:
+                    self.change_state(FirstShotState())
+                    self.char_state(frame[0])
+                    self.change_state(SecondShotState())
+                    self.char_state(frame[1])
+                self.i += 1
 
 
 # Реализация паттерна проектирования "Состояние"
@@ -78,9 +80,3 @@ class SecondShotState(State):
 
     def spare(self):
         return 15
-
-
-gaming_bowling = Bowling()
-gaming_bowling.get_scope('XXXXXXXXX//')  # TODO / в начале фрейма должен вызывать ошибку
-print(gaming_bowling.total_score)
-gaming_bowling.get_scope('XXXXXXXXXа/')  # TODO Сейчас перед '/' можно вообще любой символ поставить)
