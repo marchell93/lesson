@@ -80,3 +80,10 @@ class SecondShotState(State):
 
     def spare(self):
         return 15
+
+
+gaming_bowling = Bowling()
+gaming_bowling.get_scope('XXXXXXXXX//')  # TODO / в начале фрейма должен вызывать ошибку
+print(gaming_bowling.total_score)
+gaming_bowling.get_scope('XXXXXXXXXа/')
+print(gaming_bowling.total_score)
