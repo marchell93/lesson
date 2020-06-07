@@ -35,7 +35,7 @@ class Bowling:
                 if len(frame) == 1:
                     self.change_state(FirstShotState())
                     self.char_state(frame[0])
-                elif frame[1] == '/' and frame[0] != '0':
+                elif frame[1] == '/' and frame[0].isdigit() and frame[0] != '0':
                     self.change_state(SecondShotState())
                     self.char_state(frame[1])
                 else:
@@ -80,10 +80,3 @@ class SecondShotState(State):
 
     def spare(self):
         return 15
-
-
-gaming_bowling = Bowling()
-gaming_bowling.get_scope('XXXXXXXXX//')  # TODO / в начале фрейма должен вызывать ошибку
-print(gaming_bowling.total_score)
-gaming_bowling.get_scope('XXXXXXXXXа/')
-print(gaming_bowling.total_score)
