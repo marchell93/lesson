@@ -44,6 +44,8 @@ class Bowling:
                     self.change_state(SecondShotState())
                     self.char_state(frame[1])
                 self.i += 1
+        if self.frame_count < 10:
+            raise ValueError('Сыграно меньше 10 фрэймов, запись game_result ошибочна!!!')
 
 
 # Реализация паттерна проектирования "Состояние"
@@ -80,9 +82,3 @@ class SecondShotState(State):
 
     def spare(self):
         return 15
-
-
-gaming_bowling = Bowling()
-
-gaming_bowling.get_scope('X')  # TODO Нужно ещё добавить проверку на количество фрэймов (должно быть ровно 10)
-print(gaming_bowling.total_score)
