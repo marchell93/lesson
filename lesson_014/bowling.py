@@ -80,3 +80,9 @@ class SecondShotState(State):
 
     def spare(self):
         return 15
+
+
+gaming_bowling = Bowling()
+
+gaming_bowling.get_scope('X')  # TODO Нужно ещё добавить проверку на количество фрэймов (должно быть ровно 10)
+print(gaming_bowling.total_score)
