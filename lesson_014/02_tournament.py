@@ -25,8 +25,20 @@
 #
 # Из текущего файла сделать консольный скрипт для формирования файла с результатами турнира.
 # Параметры скрипта: --input <файл протокола турнира> и --output <файл результатов турнира>
+import argparse
 
-# TODO тут ваш код
+from process_tournament import TournamentInfo
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input', type=str, help='Введите путь к файлу протокола турнира', required=True)
+    parser.add_argument('--output', type=str, help='Введите путь к файлу результатов турнира', required=True)
+    args = parser.parse_args()
+
+    tournament = TournamentInfo(args.input, args.output)
+    tournament.game_info()
+    tournament.write_on_console()
+
 
 # Усложненное задание (делать по желанию)
 #
