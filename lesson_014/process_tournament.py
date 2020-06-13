@@ -36,6 +36,9 @@ class TournamentInfo:
                 except ValueError as exc:
                     new_line = f'{name}\t{scope}\t{exc.args}'
                     self.write_to_file(new_line)
+                    # TODO Тут вы многократно открываете и закрываете файл внутри цикла
+                    # TODO Отсюда и большой расход ресурсов
+                    # TODO Попробуйте открыть файл до цикла и закрыть после, когда все записи будут сделаны
 
                 except IndexError:
                     new_line = f'{name}\t{scope}\t(Количество бросков во фрейме не хватает ' \

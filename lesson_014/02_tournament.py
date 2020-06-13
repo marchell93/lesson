@@ -26,19 +26,39 @@
 # Из текущего файла сделать консольный скрипт для формирования файла с результатами турнира.
 # Параметры скрипта: --input <файл протокола турнира> и --output <файл результатов турнира>
 import argparse
-
 from process_tournament import TournamentInfo
+import time
 
-if __name__ == '__main__':
+
+def time_track(func):
+    def surrogate(*args, **kwargs):
+        started_at = time.time()
+
+        result = func(*args, **kwargs)
+
+        ended_at = time.time()
+        elapsed = round(ended_at - started_at, 4)
+        print(f'Функция работала {elapsed} секунд(ы)')
+        return result
+
+    return surrogate
+
+
+@time_track
+def test_time():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=str, help='Введите путь к файлу протокола турнира', required=True)
     parser.add_argument('--output', type=str, help='Введите путь к файлу результатов турнира', required=True)
     args = parser.parse_args()
-
     tournament = TournamentInfo(args.input, args.output)
     tournament.game_info()
     tournament.write_on_console()
 
+
+if __name__ == '__main__':
+    # TODO Я заметил что программа работает довольно медленно
+    # TODO Нашёл причину такого замедления - подробнее в коде
+    test_time()
 
 # Усложненное задание (делать по желанию)
 #
