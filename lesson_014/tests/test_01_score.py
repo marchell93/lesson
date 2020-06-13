@@ -47,6 +47,10 @@ class MyBowlingTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.gaming_bowling.get_scope('XXXXXXXX')
 
+    def test_raise_greater_equally_10_points(self):
+        with self.assertRaises(ValueError):
+            self.gaming_bowling.get_scope('XXXXXXXXX82')
+
 
 if __name__ == '__main__':
     unittest.main()

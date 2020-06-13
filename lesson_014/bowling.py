@@ -39,6 +39,10 @@ class Bowling:
                     self.change_state(SecondShotState())
                     self.char_state(frame[1])
                 else:
+                    if frame[0].isdigit() and frame[1].isdigit():
+                        if int(frame[0]) + int(frame[1]) >= 10:
+                            raise ValueError('Сумма очков за два броска не должна превышать или быть равной 10 ' +
+                                             'очкам...здесь должен быть спэр!!!')
                     self.change_state(FirstShotState())
                     self.char_state(frame[0])
                     self.change_state(SecondShotState())
