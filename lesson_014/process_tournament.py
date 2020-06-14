@@ -11,6 +11,7 @@ class TournamentInfo:
         self.name_count_win = {}
 
     def game_info(self):
+        output_file = open(self.output_file,  mode='a+', encoding='utf-8')
         with open(self.input_file, mode='r', encoding='utf-8') as file:
             for line in file:
                 line = line.strip('\n')
@@ -23,27 +24,25 @@ class TournamentInfo:
                         bowling_game.get_scope(scope)
                         digit_scope = bowling_game.total_score
                         new_line = f'{name}\t{scope}\t{digit_scope}'
-                        self.write_to_file(new_line)
+                        output_file.write(f'{new_line}\n')
                         self.winner_info(name, digit_scope)
                         self.count_game(name)
                     elif 'winner is' in line:
                         winner_line = f'winner is {self.winner[0]}'
-                        self.write_to_file(winner_line)
+                        output_file.write(f'{winner_line}\n')
                         self.count_win(self.winner[0])
                         self.winner.clear()
                     else:
-                        self.write_to_file(line)
+                        output_file.write(f'{line}\n')
                 except ValueError as exc:
                     new_line = f'{name}\t{scope}\t{exc.args}'
-                    self.write_to_file(new_line)
-                    # TODO Тут вы многократно открываете и закрываете файл внутри цикла
-                    # TODO Отсюда и большой расход ресурсов
-                    # TODO Попробуйте открыть файл до цикла и закрыть после, когда все записи будут сделаны
+                    output_file.write(f'{new_line}\n')
 
                 except IndexError:
                     new_line = f'{name}\t{scope}\t(Количество бросков во фрейме не хватает ' \
                         f'для корректного подсчета очков.)'
-                    self.write_to_file(new_line)
+                    output_file.write(f'{new_line}\n')
+        output_file.close()
 
     def winner_info(self, name, total_score):
         if not self.winner:
@@ -65,10 +64,6 @@ class TournamentInfo:
             self.name_count_win[name] += 1
         else:
             self.name_count_win[name] = 1
-
-    def write_to_file(self, result_line):
-        with open(self.output_file, mode='a+', encoding='utf-8') as file:
-            file.write(f'{result_line}\n')
 
     def write_on_console(self):
         format_chars = ['+', '-', 'Игрок', 'сыграно матчей', 'всего побед']
