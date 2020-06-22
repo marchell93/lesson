@@ -33,14 +33,17 @@
 #   Количество очков для результатов ХХХ - УУУ.
 
 import argparse
-from bowling import Bowling
+from bowling import Bowling, BowlingModify
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--result', type=str, help='Введите результат игры в боулинг', required=True)
+    parser.add_argument('--market', type=str, help='Введите для какого рынка необходимо произвести расчеты '
+                                                   '(home - внутренний, foreign - внешний)', required=True)
     args = parser.parse_args()
+    markets = {'home': Bowling, 'foreign': BowlingModify}
     try:
-        gaming_bowling = Bowling()
+        gaming_bowling = markets[args.market]()
         gaming_bowling.get_scope(args.result)
         print(f'Количество очков для результатов {args.result} - {gaming_bowling.total_score}')
     except Exception as exc:
@@ -50,4 +53,4 @@ if __name__ == '__main__':
 # При написании кода помнить, что заказчик может захотеть доработок и новых возможностей...
 # И, возможно, вам пригодится паттерн проектирования "Состояние",
 #   см https://clck.ru/Fudd8 и https://refactoring.guru/ru/design-patterns/state
-#зачет!
+# зачет!

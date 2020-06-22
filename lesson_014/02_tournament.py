@@ -49,8 +49,10 @@ def test_time():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=str, help='Введите путь к файлу протокола турнира', required=True)
     parser.add_argument('--output', type=str, help='Введите путь к файлу результатов турнира', required=True)
+    parser.add_argument('--market', type=str, help='Введите для какого рынка необходимо произвести расчеты '
+                                                   '(home - внутренний, foreign - внешний)', required=True)
     args = parser.parse_args()
-    tournament = TournamentInfo(args.input, args.output)
+    tournament = TournamentInfo(args.input, args.output, args.market)
     tournament.game_info()
     tournament.write_on_console()
 
@@ -69,4 +71,4 @@ if __name__ == '__main__':
 # ...
 # | Алексей  |        20        |       5      |
 # +----------+------------------+--------------+
-#зачет!
+# зачет!

@@ -1,16 +1,18 @@
-from bowling import Bowling
+from bowling import Bowling, BowlingModify
 
 
 class TournamentInfo:
 
-    def __init__(self, input_file, output_file):
+    def __init__(self, input_file, output_file, market):
         self.input_file = input_file
         self.output_file = output_file
         self.winner = []
         self.name_count_game = {}
         self.name_count_win = {}
+        self.market = market
 
     def game_info(self):
+        markets = {'home': Bowling, 'foreign': BowlingModify}
         output_file = open(self.output_file,  mode='a+', encoding='utf-8')
         with open(self.input_file, mode='r', encoding='utf-8') as file:
             for line in file:
@@ -20,7 +22,7 @@ class TournamentInfo:
                         line = line.split('\t')
                         name = line[0]
                         scope = line[1]
-                        bowling_game = Bowling()
+                        bowling_game = markets[self.market]()
                         bowling_game.get_scope(scope)
                         digit_scope = bowling_game.total_score
                         new_line = f'{name}\t{scope}\t{digit_scope}'
